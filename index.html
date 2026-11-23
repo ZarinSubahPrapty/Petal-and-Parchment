@@ -1,0 +1,3337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Petal &amp; Parchment — Letters &amp; Blooms</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- 10 Curated Romantic, Vintage & Handwriting Google Fonts + UI Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@500;700&family=Great+Vibes&family=Indie+Flower&family=Lora:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;600&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Shadows+Into+Light&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ivory: '#FFFBF5',
+            blush: '#FFE4E8',
+            coral: '#F43F5E',
+            rosepop: '#FB7185',
+            marigold: '#F59E0B',
+            botanical: '#10B981',
+            emeralddeep: '#059669',
+            ink: '#291D1E'
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            script: ['"Dancing Script"', 'cursive']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* ==========================================================================
+       1. SUNLIT ROMANTIC THEME & CANVA-STYLE POP-OUT KEYFRAMES
+       ========================================================================== */
+    :root {
+      --paper-bg: #fffdf9;
+    }
+
+    body {
+      background-color: #FFFBF5;
+      background-image:
+        radial-gradient(circle at 10% 8%, rgba(244, 63, 94, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 90% 12%, rgba(245, 158, 11, 0.13) 0%, transparent 42%),
+        radial-gradient(circle at 82% 88%, rgba(16, 185, 129, 0.11) 0%, transparent 45%);
+      color: #291D1E;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Canva Elastic Pop-In */
+    @keyframes canvaPopIn {
+      0% { opacity: 0; transform: scale(0.72) translateY(18px); }
+      65% { opacity: 1; transform: scale(1.04) translateY(-4px); }
+      85% { transform: scale(0.98) translateY(1px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .canva-pop-in {
+      animation: canvaPopIn 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    /* Canva Slide-Rise */
+    @keyframes canvaSlideRise {
+      0% { opacity: 0; transform: translateY(32px) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .canva-slide-rise {
+      animation: canvaSlideRise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    /* Canva Sparkle Burst */
+    @keyframes sparkleFloat {
+      0% { opacity: 1; transform: translate(0, 0) scale(0.5) rotate(0deg); }
+      100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(1.3) rotate(180deg); }
+    }
+    .canva-sparkle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      animation: sparkleFloat 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Ambient Floating Petals */
+    @keyframes floatPetal {
+      0% { transform: translateY(-6vh) rotate(0deg) translateX(0px); opacity: 0; }
+      15% { opacity: 0.65; }
+      85% { opacity: 0.65; }
+      100% { transform: translateY(105vh) rotate(340deg) translateX(30px); opacity: 0; }
+    }
+    .floating-petal {
+      position: fixed;
+      top: -5vh;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatPetal linear infinite;
+    }
+
+    /* ==========================================================================
+       2. PAPER TEXTURES & AGED PARCHMENT STYLES (8 OPTIONS)
+       ========================================================================== */
+    .paper-sheet {
+      position: relative;
+      background-color: var(--paper-bg);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow:
+        0 20px 46px rgba(244, 63, 94, 0.12),
+        0 6px 18px rgba(41, 29, 30, 0.08),
+        inset 0 0 36px rgba(245, 158, 11, 0.05);
+    }
+
+    .texture-coffee::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      background:
+        radial-gradient(circle at 82% 18%, transparent 45px, rgba(133, 82, 38, 0.15) 49px, rgba(110, 62, 24, 0.25) 52px, transparent 55px),
+        radial-gradient(circle at 16% 84%, rgba(145, 92, 44, 0.14) 0%, rgba(145, 92, 44, 0.06) 45%, transparent 72%),
+        radial-gradient(ellipse at center, transparent 58%, rgba(136, 86, 44, 0.22) 100%);
+      z-index: 1;
+    }
+
+    .texture-burnt::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      box-shadow:
+        inset 0 0 38px 14px rgba(64, 32, 12, 0.74),
+        inset 0 0 14px 4px rgba(26, 12, 4, 0.88);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(28, 13, 5, 0.86) 0%, rgba(96, 50, 18, 0.35) 16%, transparent 32%),
+        radial-gradient(circle at 100% 0%, rgba(28, 13, 5, 0.84) 0%, rgba(96, 50, 18, 0.32) 14%, transparent 28%),
+        radial-gradient(circle at 0% 100%, rgba(28, 13, 5, 0.86) 0%, rgba(96, 50, 18, 0.35) 15%, transparent 30%),
+        radial-gradient(circle at 100% 100%, rgba(28, 13, 5, 0.88) 0%, rgba(96, 50, 18, 0.38) 18%, transparent 34%);
+      z-index: 1;
+    }
+
+    .texture-lined::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      background-image:
+        linear-gradient(90deg, transparent 44px, rgba(244, 63, 94, 0.34) 44px, rgba(244, 63, 94, 0.34) 46px, transparent 46px),
+        repeating-linear-gradient(to bottom, transparent 0px, transparent 31px, rgba(99, 132, 178, 0.28) 32px);
+      z-index: 1;
+    }
+
+    .texture-dots::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      background-image: radial-gradient(rgba(120, 96, 86, 0.3) 1.3px, transparent 1.3px);
+      background-size: 22px 22px;
+      z-index: 1;
+    }
+
+    .texture-gold::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      background-image:
+        radial-gradient(circle at 15% 22%, rgba(245, 158, 11, 0.65) 1.8px, transparent 2.8px),
+        radial-gradient(circle at 75% 14%, rgba(245, 158, 11, 0.55) 2.2px, transparent 3.2px),
+        radial-gradient(circle at 38% 68%, rgba(245, 158, 11, 0.6) 1.8px, transparent 2.8px),
+        radial-gradient(circle at 86% 79%, rgba(245, 158, 11, 0.7) 2.2px, transparent 3.2px);
+      background-size: 130px 130px;
+      box-shadow: inset 0 0 28px rgba(245, 158, 11, 0.22);
+      z-index: 1;
+    }
+
+    .texture-crinkled::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      background:
+        linear-gradient(125deg, rgba(255,255,255,0.35) 0%, rgba(140,110,85,0.11) 25%, rgba(255,255,255,0.28) 50%, rgba(130,100,75,0.13) 75%, rgba(255,255,255,0.3) 100%),
+        linear-gradient(35deg, rgba(140,110,85,0.1) 0%, rgba(255,255,255,0.3) 40%, rgba(130,100,75,0.11) 70%, transparent 100%);
+      box-shadow: inset 0 0 42px rgba(125, 95, 65, 0.22);
+      z-index: 1;
+    }
+
+    .texture-botanical::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      background:
+        radial-gradient(circle at 12% 14%, rgba(16, 185, 129, 0.16) 0%, transparent 28%),
+        radial-gradient(circle at 88% 86%, rgba(244, 63, 94, 0.15) 0%, transparent 30%);
+      box-shadow: inset 0 0 24px rgba(16, 185, 129, 0.14);
+      z-index: 1;
+    }
+
+    /* ==========================================================================
+       3. REALISTIC 3D BOOK PAGE TURN & 3D ENVELOPE UNFOLDING
+       ========================================================================== */
+    .book-stage {
+      perspective: 2200px;
+      position: relative;
+    }
+    .book-leaf-turn-next {
+      animation: realisticBookTurnNext 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+    }
+    .book-leaf-turn-prev {
+      animation: realisticBookTurnPrev 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+    }
+    @keyframes realisticBookTurnNext {
+      0% { transform: rotateY(0deg) skewY(0deg); }
+      35% { transform: rotateY(-56deg) skewY(-2deg) scaleX(0.96); box-shadow: 34px 24px 56px rgba(41,29,30,0.26); }
+      55% { transform: rotateY(-102deg) skewY(2deg) scaleX(0.94); opacity: 0.72; }
+      75% { transform: rotateY(-24deg) skewY(-1deg) scaleX(0.98); opacity: 0.95; }
+      100% { transform: rotateY(0deg) skewY(0deg) scaleX(1); opacity: 1; }
+    }
+    @keyframes realisticBookTurnPrev {
+      0% { transform: rotateY(-82deg) skewY(2deg); opacity: 0.68; }
+      50% { transform: rotateY(-22deg) skewY(-1.5deg); box-shadow: 28px 20px 48px rgba(41,29,30,0.24); opacity: 0.95; }
+      100% { transform: rotateY(0deg) skewY(0deg); opacity: 1; }
+    }
+
+    /* Realistic Satin Ribbon Sheen */
+    .satin-ribbon-band {
+      position: relative;
+      box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.28),
+        inset 0 2px 2px rgba(255, 255, 255, 0.65),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.42);
+    }
+    .satin-ribbon-band::before {
+      content: "";
+      position: absolute;
+      inset: 2px 0;
+      border-top: 1px dashed rgba(255, 255, 255, 0.32);
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.32);
+      pointer-events: none;
+    }
+    .satin-ribbon-band::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.52) 0%,
+        rgba(255,255,255,0.12) 24%,
+        rgba(0,0,0,0.08) 48%,
+        rgba(255,255,255,0.34) 68%,
+        rgba(0,0,0,0.36) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* 3D Envelope & Unfolding Sequence */
+    .envelope-wrapper-3d {
+      perspective: 1400px;
+      cursor: pointer;
+    }
+    .envelope-body {
+      position: relative;
+      width: 330px;
+      height: 218px;
+      border-radius: 16px;
+      box-shadow: 0 22px 46px rgba(41, 29, 30, 0.2), 0 4px 14px rgba(244, 63, 94, 0.14);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+    }
+    .envelope-wrapper-3d:hover .envelope-body {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 28px 56px rgba(244, 63, 94, 0.24);
+    }
+    .envelope-top-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 124px;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.24) 0%, rgba(0,0,0,0.16) 100%);
+      transform-origin: top center;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 12;
+    }
+    .envelope-pocket-bottom {
+      position: absolute;
+      inset: 0;
+      clip-path: polygon(0 100%, 50% 44%, 100% 100%);
+      background: linear-gradient(0deg, rgba(0,0,0,0.12) 0%, rgba(255,255,255,0.16) 100%);
+      z-index: 10;
+      pointer-events: none;
+    }
+    .envelope-pocket-sides {
+      position: absolute;
+      inset: 0;
+      clip-path: polygon(0 0, 48% 52%, 0 100%, 100% 100%, 52% 52%, 100% 0);
+      background: rgba(0, 0, 0, 0.06);
+      z-index: 9;
+      pointer-events: none;
+    }
+    .stage-untie .ribbon-layer {
+      opacity: 0;
+      transform: scale(1.2);
+      transition: all 0.5s ease;
+    }
+    .stage-flap-open .envelope-top-flap {
+      transform: rotateX(180deg);
+      z-index: 2;
+    }
+    .letter-popout-card {
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      bottom: 16px;
+      height: 170px;
+      border-radius: 12px;
+      box-shadow: 0 14px 32px rgba(0,0,0,0.22);
+      transform: translateY(0) scale(0.92);
+      opacity: 0;
+      z-index: 6;
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+    }
+    .stage-letter-pop .letter-popout-card {
+      opacity: 1;
+      transform: translateY(-135px) scale(1.06);
+      z-index: 25;
+    }
+
+    @keyframes unfoldPageSequence {
+      0% { transform: perspective(1400px) scale(0.45) rotateX(62deg); opacity: 0.2; }
+      55% { transform: perspective(1400px) scale(1.02) rotateX(-4deg); opacity: 1; }
+      100% { transform: perspective(1400px) scale(1) rotateX(0deg); opacity: 1; }
+    }
+    .animate-unfold-sheet {
+      animation: unfoldPageSequence 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      transform-origin: center top;
+    }
+
+    /* ==========================================================================
+       4. 4-SIDED RESIZABLE BOXES (TEXT BLOCKS, STICKERS, PHOTOS & VIDEOS)
+       ========================================================================== */
+    .resizable-box {
+      position: absolute;
+      user-select: none;
+      touch-action: none;
+      z-index: 10;
+    }
+    .resizable-box.is-active {
+      outline: 2px dashed #F43F5E;
+      outline-offset: 2px;
+      border-radius: 8px;
+    }
+    .resize-handle {
+      position: absolute;
+      background: #F43F5E;
+      border: 2px solid #FFFFFF;
+      border-radius: 999px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+      opacity: 0;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      z-index: 30;
+    }
+    .resizable-box:hover .resize-handle,
+    .resizable-box.is-active .resize-handle {
+      opacity: 1;
+    }
+    .resize-handle:hover { transform: scale(1.25); }
+    .rh-n  { top: -6px; left: 50%; margin-left: -14px; width: 28px; height: 9px; cursor: ns-resize; }
+    .rh-s  { bottom: -6px; left: 50%; margin-left: -14px; width: 28px; height: 9px; cursor: ns-resize; }
+    .rh-w  { left: -6px; top: 50%; margin-top: -14px; width: 9px; height: 28px; cursor: ew-resize; }
+    .rh-e  { right: -6px; top: 50%; margin-top: -14px; width: 9px; height: 28px; cursor: ew-resize; }
+    .rh-nw { top: -6px; left: -6px; width: 12px; height: 12px; cursor: nwse-resize; }
+    .rh-ne { top: -6px; right: -6px; width: 12px; height: 12px; cursor: nesw-resize; }
+    .rh-sw { bottom: -6px; left: -6px; width: 12px; height: 12px; cursor: nesw-resize; }
+    .rh-se { bottom: -6px; right: -6px; width: 12px; height: 12px; cursor: nwse-resize; }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar-track { background: #FFF1F2; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb { background: #FDA4AF; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #F43F5E; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-coral selection:text-white">
+
+  <!-- Ambient Floating Petals Layer -->
+  <div id="petal-container" aria-hidden="true"></div>
+
+  <!-- Non-Blocking Toast Notification -->
+  <div id="toast-banner" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-ink text-white px-5 py-3 rounded-2xl shadow-2xl border border-rosepop/40 flex items-center gap-3 text-sm font-medium">
+      <span id="toast-icon">✨</span>
+      <span id="toast-message">Notification</span>
+    </div>
+  </div>
+
+  <!-- Top Navigation Header -->
+  <header class="relative z-20 border-b border-coral/15 bg-white/85 backdrop-blur-md sticky top-0 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <button onclick="navigateTo('home')" class="flex items-center gap-3 text-left group focus:outline-none">
+        <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-coral via-rosepop to-marigold flex items-center justify-center text-white shadow-md group-hover:scale-105 transition">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </span>
+        <div>
+          <span class="font-serif font-bold text-lg sm:text-xl tracking-tight text-ink block leading-none">Petal &amp; Parchment</span>
+          <span class="text-[11px] text-coral font-bold tracking-widest uppercase">Letters &amp; Botanical Blooms</span>
+        </div>
+      </button>
+
+      <nav class="flex items-center gap-1.5 sm:gap-3">
+        <button onclick="navigateTo('letter')" class="px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold text-ink hover:bg-blush/70 transition flex items-center gap-1.5">
+          <span>✉️</span> <span class="hidden sm:inline">Letter Studio</span>
+        </button>
+        <button onclick="navigateTo('bouquet')" class="px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold text-ink hover:bg-emerald-50 transition flex items-center gap-1.5">
+          <span>💐</span> <span class="hidden sm:inline">Bouquet Atelier</span>
+        </button>
+        <button onclick="openSharePreview(event)" class="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-gradient-to-r from-coral to-rosepop text-white hover:opacity-95 shadow-md shadow-coral/25 transition flex items-center gap-1.5">
+          <span>🎁</span> <span>Finish &amp; Share</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN APPLICATION VIEWS
+       ========================================================================== -->
+  <main class="flex-1 relative z-10">
+
+    <!-- 1. LANDING / HOME VIEW WITH 3 EXPLICIT MODES -->
+    <section id="view-home" class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+      <div class="text-center max-w-2xl mx-auto mb-12 canva-slide-rise">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-blush to-amber-100 border border-coral/25 text-coral text-xs font-bold tracking-wider uppercase mb-4 shadow-xs">
+          <span>❀ Sunlit Letters &amp; Photorealistic Bouquets ❀</span>
+        </div>
+        <h1 class="font-serif text-4xl sm:text-6xl font-bold text-ink leading-tight mb-4">
+          Petal &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-coral via-rosepop to-marigold">Parchment</span>
+        </h1>
+        <p class="text-base sm:text-lg text-ink/80 leading-relaxed">
+          Choose how you want to delight someone special—send a heartfelt multi-page letter, craft a lush 32-stem botanical bouquet, or present both together.
+        </p>
+      </div>
+
+      <!-- Three Starting Mode Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <!-- Mode 1: Letter Only -->
+        <div onclick="startCreationMode('letter-only', event)" class="canva-pop-in group cursor-pointer bg-white rounded-3xl p-7 border-2 border-coral/20 shadow-xl shadow-coral/10 hover:shadow-2xl hover:border-coral/55 hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden flex flex-col justify-between" style="animation-delay: 0.05s;">
+          <div class="absolute -right-8 -top-8 w-36 h-36 rounded-full bg-blush/70 group-hover:scale-125 transition-transform duration-500"></div>
+          <div class="relative z-10">
+            <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-coral to-rosepop text-white flex items-center justify-center text-2xl mb-5 shadow-md">
+              ✉️
+            </div>
+            <span class="inline-block px-2.5 py-0.5 rounded-full bg-blush text-coral text-[11px] font-bold uppercase tracking-wider mb-2">Mode 1</span>
+            <h2 class="font-serif text-2xl font-bold text-ink mb-2">Write a Letter Only</h2>
+            <p class="text-sm text-ink/75 mb-6 leading-relaxed">
+              Multi-page parchment with 10 fonts, 4-sided resizable text &amp; photos/videos, stickers, and a satin-tied envelope or scroll.
+            </p>
+          </div>
+          <div class="relative z-10 inline-flex items-center gap-2 text-coral font-bold text-sm group-hover:translate-x-1 transition-transform">
+            <span>Start Letter Only</span>
+            <span>→</span>
+          </div>
+        </div>
+
+        <!-- Mode 2: Bouquet Only -->
+        <div onclick="startCreationMode('bouquet-only', event)" class="canva-pop-in group cursor-pointer bg-white rounded-3xl p-7 border-2 border-botanical/25 shadow-xl shadow-botanical/10 hover:shadow-2xl hover:border-botanical/60 hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden flex flex-col justify-between" style="animation-delay: 0.14s;">
+          <div class="absolute -right-8 -top-8 w-36 h-36 rounded-full bg-emerald-100/80 group-hover:scale-125 transition-transform duration-500"></div>
+          <div class="relative z-10">
+            <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-botanical to-emeralddeep text-white flex items-center justify-center text-2xl mb-5 shadow-md">
+              💐
+            </div>
+            <span class="inline-block px-2.5 py-0.5 rounded-full bg-emerald-100 text-emeralddeep text-[11px] font-bold uppercase tracking-wider mb-2">Mode 2</span>
+            <h2 class="font-serif text-2xl font-bold text-ink mb-2">Craft a Bouquet Only</h2>
+            <p class="text-sm text-ink/75 mb-6 leading-relaxed">
+              Arrange 32 photorealistic botanical stems with shaded petals, foliage, designer craft wrapping paper, satin bow &amp; gift tag.
+            </p>
+          </div>
+          <div class="relative z-10 inline-flex items-center gap-2 text-emeralddeep font-bold text-sm group-hover:translate-x-1 transition-transform">
+            <span>Start Bouquet Only</span>
+            <span>→</span>
+          </div>
+        </div>
+
+        <!-- Mode 3: Letter + Bouquet Together -->
+        <div onclick="startCreationMode('both', event)" class="canva-pop-in group cursor-pointer bg-gradient-to-br from-white via-blush/25 to-amber-50/60 rounded-3xl p-7 border-2 border-marigold/40 shadow-xl shadow-marigold/15 hover:shadow-2xl hover:border-coral hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden flex flex-col justify-between" style="animation-delay: 0.22s;">
+          <div class="absolute -right-8 -top-8 w-36 h-36 rounded-full bg-amber-100/80 group-hover:scale-125 transition-transform duration-500"></div>
+          <div class="relative z-10">
+            <div class="w-13 h-13 rounded-2xl bg-gradient-to-br from-coral via-marigold to-botanical text-white flex items-center justify-center text-2xl mb-5 shadow-md">
+              🎁
+            </div>
+            <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold uppercase tracking-wider mb-2">Complete Keepsake</span>
+            <h2 class="font-serif text-2xl font-bold text-ink mb-2">Letter + Bouquet Together</h2>
+            <p class="text-sm text-ink/75 mb-6 leading-relaxed">
+              Write your multi-page letter first, then craft a matching botanical bouquet—presented side-by-side in one magical keepsake link.
+            </p>
+          </div>
+          <div class="relative z-10 inline-flex items-center gap-2 text-coral font-bold text-sm group-hover:translate-x-1 transition-transform">
+            <span>Create Both Together</span>
+            <span>→</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Saved Draft Banner -->
+      <div id="resume-draft-box" class="hidden max-w-xl mx-auto mt-10 bg-white border border-marigold/40 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md">
+        <div class="text-xs sm:text-sm text-ink/85 text-center sm:text-left">
+          <span class="font-bold text-coral">Saved Draft Found:</span> Resume your letter or bouquet anytime.
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="navigateTo('letter')" class="px-4 py-1.5 rounded-xl bg-coral text-white text-xs font-semibold hover:opacity-90">Resume</button>
+          <button onclick="resetAllData()" class="px-3 py-1.5 rounded-xl border border-ink/20 text-ink/70 text-xs hover:bg-ink/5">Start Fresh</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         2. LETTER STUDIO VIEW (4-SIDED RESIZABLE BOXES, STICKERS, MEDIA, FOLDING)
+         ========================================================================== -->
+    <section id="view-letter" class="hidden max-w-7xl mx-auto px-3 sm:px-6 py-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-5 bg-white p-4 rounded-2xl border border-coral/20 shadow-sm">
+        <div class="flex items-center gap-2.5">
+          <span class="w-9 h-9 rounded-xl bg-blush text-coral flex items-center justify-center text-lg">🖋️</span>
+          <div>
+            <h2 class="font-serif font-bold text-lg text-ink leading-tight">Letter Studio</h2>
+            <p class="text-xs text-ink/65">Drag any of the 4 edges or corners to resize text boxes, photos &amp; videos.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 bg-ivory p-1.5 rounded-xl border border-coral/20">
+          <button id="tab-letter-edit" onclick="setLetterSubMode('edit')" class="px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-coral text-white shadow-sm transition">
+            1. Pages &amp; Decor
+          </button>
+          <button id="tab-letter-fold" onclick="setLetterSubMode('fold')" class="px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-ink/75 hover:text-ink transition">
+            2. Fold &amp; Satin Ribbon
+          </button>
+        </div>
+
+        <button onclick="finishLetterStep(event)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-botanical to-emeralddeep text-white text-xs sm:text-sm font-bold hover:opacity-95 shadow-sm transition flex items-center gap-1.5">
+          <span id="letter-done-btn-label">Done with Letter</span>
+          <span>→</span>
+        </button>
+      </div>
+
+      <!-- SUB-MODE A: PAGES, 4-SIDED RESIZABLE TEXT, STICKERS & MEDIA -->
+      <div id="letter-edit-workspace" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- LEFT TOOLBOX PANEL -->
+        <div class="lg:col-span-4 bg-white rounded-3xl border border-coral/20 shadow-lg p-4 space-y-4">
+          <div class="grid grid-cols-4 gap-1 bg-ivory p-1.5 rounded-xl border border-coral/15 text-xs font-semibold">
+            <button onclick="switchLetterTool('paper')" id="ltool-btn-paper" class="py-2 rounded-lg bg-white text-coral shadow-xs">Paper</button>
+            <button onclick="switchLetterTool('text')" id="ltool-btn-text" class="py-2 rounded-lg text-ink/70 hover:text-ink">Fonts</button>
+            <button onclick="switchLetterTool('stickers')" id="ltool-btn-stickers" class="py-2 rounded-lg text-ink/70 hover:text-ink">Stickers</button>
+            <button onclick="switchLetterTool('media')" id="ltool-btn-media" class="py-2 rounded-lg text-ink/70 hover:text-ink">Media</button>
+          </div>
+
+          <!-- TOOL 1: PAPER COLOR & 8 TEXTURES -->
+          <div id="ltool-panel-paper" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-ink/70 mb-2">Page Color (Any Color)</label>
+              <div class="flex flex-wrap items-center gap-2">
+                <input type="color" id="paper-color-picker" value="#FFFDF9" onchange="updatePageColor(this.value)" class="w-9 h-9 rounded-lg cursor-pointer border border-ink/20 bg-transparent" />
+                <button onclick="updatePageColor('#FFFDF9')" class="w-7 h-7 rounded-full border border-ink/20 bg-[#FFFDF9]" title="Ivory Cream"></button>
+                <button onclick="updatePageColor('#F9EBDD')" class="w-7 h-7 rounded-full border border-ink/20 bg-[#F9EBDD]" title="Warm Parchment"></button>
+                <button onclick="updatePageColor('#FFE4E8')" class="w-7 h-7 rounded-full border border-ink/20 bg-[#FFE4E8]" title="Sunlit Rose"></button>
+                <button onclick="updatePageColor('#FEF3C7')" class="w-7 h-7 rounded-full border border-ink/20 bg-[#FEF3C7]" title="Honey Butter"></button>
+                <button onclick="updatePageColor('#E0F2FE')" class="w-7 h-7 rounded-full border border-ink/20 bg-[#E0F2FE]" title="Sky Mist"></button>
+                <button onclick="updatePageColor('#DCFCE7')" class="w-7 h-7 rounded-full border border-ink/20 bg-[#DCFCE7]" title="Mint Blossom"></button>
+                <button onclick="updatePageColor('#272226')" class="w-7 h-7 rounded-full border border-ink/20 bg-[#272226]" title="Midnight Velvet"></button>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-ink/70 mb-2">Paper Style &amp; Aged Effects (8 Types)</label>
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <button onclick="updatePageTexture('none')" class="p-2.5 rounded-xl border border-coral/20 hover:bg-blush/40 text-left font-medium">✨ Smooth Classic</button>
+                <button onclick="updatePageTexture('coffee')" class="p-2.5 rounded-xl border border-coral/20 hover:bg-blush/40 text-left font-medium">☕ Coffee Stained</button>
+                <button onclick="updatePageTexture('burnt')" class="p-2.5 rounded-xl border border-coral/20 hover:bg-blush/40 text-left font-medium">🔥 Burnt Corners</button>
+                <button onclick="updatePageTexture('crinkled')" class="p-2.5 rounded-xl border border-coral/20 hover:bg-blush/40 text-left font-medium">📜 Crinkled Vintage</button>
+                <button onclick="updatePageTexture('lined')" class="p-2.5 rounded-xl border border-coral/20 hover:bg-blush/40 text-left font-medium">📓 Lined Diary</button>
+                <button onclick="updatePageTexture('dots')" class="p-2.5 rounded-xl border border-coral/20 hover:bg-blush/40 text-left font-medium">⠿ Dot Journal</button>
+                <button onclick="updatePageTexture('gold')" class="p-2.5 rounded-xl border border-coral/20 hover:bg-blush/40 text-left font-medium">🌟 Gold-Flecked</button>
+                <button onclick="updatePageTexture('botanical')" class="p-2.5 rounded-xl border border-coral/20 hover:bg-blush/40 text-left font-medium">🌿 Pressed Petal</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TOOL 2: 10 FONTS & 4-SIDED RESIZABLE TEXT BOXES -->
+          <div id="ltool-panel-text" class="hidden space-y-3.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-ink/70">Text Box Controls</span>
+              <button onclick="addTextBlock()" class="px-3 py-1.5 rounded-xl bg-coral text-white text-xs font-semibold hover:opacity-90 shadow-xs">
+                + Add Text Box
+              </button>
+            </div>
+            <p class="text-[11px] text-ink/65 bg-ivory p-2 rounded-xl border border-coral/15">
+              Hover or tap any text box to reveal <b>all 4 edge &amp; corner handles</b>. Drag any side to shrink or expand width &amp; height!
+            </p>
+
+            <div>
+              <label class="block text-xs font-semibold text-ink/80 mb-1">Choose Font (10 Styles)</label>
+              <select id="font-family-select" onchange="updateActiveTextStyle('fontFamily', this.value)" class="w-full p-2.5 rounded-xl border border-coral/25 bg-white text-sm">
+                <option value="'Dancing Script', cursive">1. Dancing Script (Romantic Cursive)</option>
+                <option value="'Playfair Display', serif">2. Playfair Display (Classic Editorial)</option>
+                <option value="'Caveat', cursive">3. Caveat (Warm Handwriting)</option>
+                <option value="'Great Vibes', cursive">4. Great Vibes (Calligraphy Flourish)</option>
+                <option value="'Cormorant Garamond', serif">5. Cormorant Garamond (Poetic Serif)</option>
+                <option value="'Indie Flower', cursive">6. Indie Flower (Playful Pen)</option>
+                <option value="'Shadows Into Light', cursive">7. Shadows Into Light (Personal Note)</option>
+                <option value="'Courier Prime', monospace">8. Courier Prime (Vintage Typewriter)</option>
+                <option value="'Montserrat', sans-serif">9. Montserrat (Clean Modern)</option>
+                <option value="'Lora', serif">10. Lora (Timeless Storybook)</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-xs text-ink/75 mb-1">Ink Color</label>
+                <div class="flex items-center gap-1.5">
+                  <input type="color" id="ink-color-picker" value="#291D1E" onchange="updateActiveTextStyle('color', this.value)" class="w-8 h-8 rounded cursor-pointer border border-ink/20" />
+                  <button onclick="updateActiveTextStyle('color', '#291D1E')" class="w-6 h-6 rounded-full bg-[#291D1E] border border-ink/20"></button>
+                  <button onclick="updateActiveTextStyle('color', '#E11D48')" class="w-6 h-6 rounded-full bg-[#E11D48] border border-ink/20"></button>
+                  <button onclick="updateActiveTextStyle('color', '#1D4ED8')" class="w-6 h-6 rounded-full bg-[#1D4ED8] border border-ink/20"></button>
+                  <button onclick="updateActiveTextStyle('color', '#FFFDF9')" class="w-6 h-6 rounded-full bg-[#FFFDF9] border border-ink/30"></button>
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs text-ink/75 mb-1">Font Size</label>
+                <input type="range" id="font-size-slider" min="14" max="46" value="25" oninput="updateActiveTextStyle('fontSize', this.value + 'px')" class="w-full accent-coral" />
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+              <div class="flex items-center gap-1 bg-ivory p-1 rounded-xl border border-ink/10">
+                <button onclick="transformActiveTextCase('upper')" class="px-2.5 py-1 rounded-lg text-xs font-bold hover:bg-white">AA</button>
+                <button onclick="transformActiveTextCase('lower')" class="px-2.5 py-1 rounded-lg text-xs hover:bg-white">aa</button>
+                <button onclick="transformActiveTextCase('title')" class="px-2.5 py-1 rounded-lg text-xs hover:bg-white">Aa</button>
+              </div>
+              <div class="flex items-center gap-1 bg-ivory p-1 rounded-xl border border-ink/10">
+                <button onclick="updateActiveTextStyle('textAlign', 'left')" class="px-2.5 py-1 rounded-lg text-xs hover:bg-white">Left</button>
+                <button onclick="updateActiveTextStyle('textAlign', 'center')" class="px-2.5 py-1 rounded-lg text-xs hover:bg-white">Center</button>
+                <button onclick="updateActiveTextStyle('textAlign', 'right')" class="px-2.5 py-1 rounded-lg text-xs hover:bg-white">Right</button>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-ink/80 mb-1">Quick Placement</label>
+              <div class="grid grid-cols-3 gap-1.5 text-[11px]">
+                <button onclick="snapActiveText('top-left')" class="py-1.5 px-2 rounded-lg border border-ink/15 hover:bg-blush/50">↖ Top Left</button>
+                <button onclick="snapActiveText('top-right')" class="py-1.5 px-2 rounded-lg border border-ink/15 hover:bg-blush/50">↗ Top Right</button>
+                <button onclick="snapActiveText('center')" class="py-1.5 px-2 rounded-lg border border-ink/15 hover:bg-blush/50">✦ Center</button>
+                <button onclick="snapActiveText('bottom-left')" class="py-1.5 px-2 rounded-lg border border-ink/15 hover:bg-blush/50">↙ Bottom Left</button>
+                <button onclick="snapActiveText('bottom-right')" class="py-1.5 px-2 rounded-lg border border-ink/15 hover:bg-blush/50">↘ Bottom Right</button>
+                <button onclick="deleteActiveTextBlock()" class="py-1.5 px-2 rounded-lg border border-red-300 text-red-600 hover:bg-red-50">🗑 Remove</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TOOL 3: STICKERS (SMILEYS, FLOWERS, FOODS & LOVE — 12 EACH) -->
+          <div id="ltool-panel-stickers" class="hidden space-y-3">
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="renderStickerPicker('smileys')" id="scat-smileys" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-coral text-white">🥰 Smileys</button>
+              <button onclick="renderStickerPicker('flowers')" id="scat-flowers" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-ivory text-ink">🌸 Flowers</button>
+              <button onclick="renderStickerPicker('foods')" id="scat-foods" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-ivory text-ink">🍓 Foods</button>
+              <button onclick="renderStickerPicker('love')" id="scat-love" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-ivory text-ink">💖 Love</button>
+            </div>
+            <p class="text-[11px] text-ink/65">Tap any sticker to place it on your letter, then drag its 4 edges or tilt below.</p>
+            <div id="sticker-grid" class="grid grid-cols-3 gap-2 max-h-72 overflow-y-auto pr-1"></div>
+          </div>
+
+          <!-- TOOL 4: RESIZABLE PHOTOS & VIDEOS UPLOAD -->
+          <div id="ltool-panel-media" class="hidden space-y-3">
+            <label class="block text-xs font-bold uppercase tracking-wider text-ink/70">Add Photos or Videos</label>
+            <label class="flex flex-col items-center justify-center p-5 border-2 border-dashed border-coral/40 rounded-2xl bg-blush/20 hover:bg-blush/40 cursor-pointer transition text-center">
+              <span class="text-2xl mb-1">🖼️</span>
+              <span class="text-xs font-bold text-coral">Browse Gallery or Files</span>
+              <span class="text-[11px] text-ink/65 mt-1">Drag any of the 4 sides/corners on the letter to resize width &amp; height! Tap to pop open.</span>
+              <input type="file" accept="image/*,video/*" multiple onchange="handleMediaUpload(event)" class="hidden" />
+            </label>
+          </div>
+
+          <!-- Selected Sticker / Photo / Video Controls -->
+          <div id="selected-item-controls" class="hidden pt-3 border-t border-coral/15 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-coral">Selected Item Dimensions</span>
+              <button onclick="deleteSelectedElement()" class="text-xs text-red-600 font-semibold hover:underline">Remove</button>
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-xs">
+              <div>
+                <label class="text-[10px] text-ink/70">Width (px)</label>
+                <input type="range" id="item-width-slider" min="50" max="420" value="160" oninput="updateSelectedElementDim('width', this.value)" class="w-full accent-coral" />
+              </div>
+              <div>
+                <label class="text-[10px] text-ink/70">Height (px)</label>
+                <input type="range" id="item-height-slider" min="50" max="420" value="150" oninput="updateSelectedElementDim('height', this.value)" class="w-full accent-coral" />
+              </div>
+              <div>
+                <label class="text-[10px] text-ink/70">Tilt / Rotate</label>
+                <input type="range" id="item-rotate-slider" min="-45" max="45" step="1" value="0" oninput="updateSelectedElementDim('rotate', this.value)" class="w-full accent-coral" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT LIVE LETTER PAGE CANVAS -->
+        <div class="lg:col-span-8 flex flex-col items-center">
+          <div class="w-full max-w-2xl flex items-center justify-between mb-3 px-1">
+            <div class="flex items-center gap-2">
+              <button onclick="changeLetterPage(-1)" id="btn-prev-page" class="px-3.5 py-1.5 rounded-xl bg-white border border-coral/25 text-xs font-semibold hover:bg-blush/50 disabled:opacity-40 shadow-xs">
+                ← Prev Page
+              </button>
+              <span id="page-indicator" class="text-xs sm:text-sm font-serif font-bold text-ink px-2">Page 1 of 1</span>
+              <button onclick="changeLetterPage(1)" id="btn-next-page" class="px-3.5 py-1.5 rounded-xl bg-white border border-coral/25 text-xs font-semibold hover:bg-blush/50 disabled:opacity-40 shadow-xs">
+                Next Page →
+              </button>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button onclick="addNewLetterPage()" class="px-3.5 py-1.5 rounded-xl bg-coral text-white text-xs font-semibold hover:opacity-95 shadow-sm">
+                + Add Page
+              </button>
+              <button onclick="deleteCurrentLetterPage()" id="btn-del-page" class="px-2.5 py-1.5 rounded-xl bg-white border border-red-200 text-red-600 text-xs hover:bg-red-50 hidden">
+                🗑
+              </button>
+            </div>
+          </div>
+
+          <div class="book-stage w-full flex justify-center">
+            <div id="letter-canvas" class="paper-sheet w-full max-w-2xl min-h-[560px] sm:min-h-[630px] rounded-2xl p-6 sm:p-10 relative overflow-hidden border border-coral/20"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUB-MODE B: FOLDING (SQUARE OR ROUND), 16 ENVELOPES & SATIN RIBBON -->
+      <div id="letter-fold-workspace" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div class="lg:col-span-5 bg-white rounded-3xl border border-coral/20 shadow-lg p-5 space-y-5">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-ink/70 mb-2">1. Choose Folding Style</label>
+            <div class="grid grid-cols-2 gap-3">
+              <button onclick="setFoldType('square')" id="fold-btn-square" class="p-3.5 rounded-2xl border-2 border-coral bg-blush/35 text-left transition">
+                <div class="text-xl mb-1">✉️</div>
+                <div class="font-serif font-bold text-sm text-ink">Square Fold</div>
+                <div class="text-[11px] text-ink/70">Patterned envelope + satin bow</div>
+              </button>
+              <button onclick="setFoldType('round')" id="fold-btn-round" class="p-3.5 rounded-2xl border border-coral/20 bg-white text-left transition">
+                <div class="text-xl mb-1">📜</div>
+                <div class="font-serif font-bold text-sm text-ink">Round Scroll</div>
+                <div class="text-[11px] text-ink/70">Rolled scroll + satin ribbon bow</div>
+              </button>
+            </div>
+          </div>
+
+          <div id="envelope-options-box" class="space-y-3 pt-2 border-t border-coral/15">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-bold uppercase tracking-wider text-ink/70">2. Envelope Color or Printed Styles (16)</label>
+              <input type="color" id="env-color-picker" value="#FFE4E8" onchange="setEnvelopeStyle('solid', this.value)" class="w-8 h-8 rounded cursor-pointer border border-ink/20" />
+            </div>
+            <div id="envelope-patterns-grid" class="grid grid-cols-4 gap-2 max-h-48 overflow-y-auto pr-1"></div>
+          </div>
+
+          <div class="space-y-3 pt-2 border-t border-coral/15">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-bold uppercase tracking-wider text-ink/70">3. Realistic Satin Ribbon &amp; Prints</label>
+              <input type="color" id="ribbon-color-picker" value="#E11D48" onchange="setLetterRibbonColor(this.value)" class="w-8 h-8 rounded cursor-pointer border border-ink/20" />
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-xs">
+              <button onclick="setLetterRibbonPrint('solid')" class="p-2 rounded-xl border border-coral/20 hover:bg-blush/40 font-medium">🎀 Satin Silk</button>
+              <button onclick="setLetterRibbonPrint('balls')" class="p-2 rounded-xl border border-coral/20 hover:bg-blush/40 font-medium">⚪ Ball Dots</button>
+              <button onclick="setLetterRibbonPrint('hearts')" class="p-2 rounded-xl border border-coral/20 hover:bg-blush/40 font-medium">🤍 Mini Hearts</button>
+              <button onclick="setLetterRibbonPrint('stars')" class="p-2 rounded-xl border border-coral/20 hover:bg-blush/40 font-medium">✨ Gold Stars</button>
+              <button onclick="setLetterRibbonPrint('stitch')" class="p-2 rounded-xl border border-coral/20 hover:bg-blush/40 font-medium">🪡 Edge Stitch</button>
+              <button onclick="setLetterRibbonPrint('goldtrim')" class="p-2 rounded-xl border border-coral/20 hover:bg-blush/40 font-medium">👑 Gold Trim</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 bg-white/85 rounded-3xl border border-coral/20 p-8 min-h-[450px] flex flex-col items-center justify-center relative shadow-inner">
+          <span class="text-xs uppercase tracking-widest text-coral font-bold mb-6">Interactive Sealed Letter Preview (Click to Test Unfolding!)</span>
+          <div id="folded-preview-stage" class="flex items-center justify-center my-4"></div>
+          <p class="text-xs text-ink/65 mt-6 text-center max-w-sm">
+            Click the envelope or scroll above to watch the satin ribbon untie and your folded letter pop out!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         3. BOUQUET ATELIER VIEW (32 PHOTOREALISTIC BOTANICAL FLOWERS)
+         ========================================================================== -->
+    <section id="view-bouquet" class="hidden max-w-7xl mx-auto px-3 sm:px-6 py-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-5 bg-white p-4 rounded-2xl border border-botanical/25 shadow-sm">
+        <div class="flex items-center gap-2.5">
+          <span class="w-9 h-9 rounded-xl bg-emerald-100 text-emeralddeep flex items-center justify-center text-lg">💐</span>
+          <div>
+            <h2 class="font-serif font-bold text-lg text-ink leading-tight">Bouquet Atelier</h2>
+            <p class="text-xs text-ink/65">Arrange 32 photorealistic botanical stems, luxury florist wrap, satin bow &amp; gift tag.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="shuffleBouquetArrangement(event)" class="px-3.5 py-1.5 rounded-xl bg-ivory border border-botanical/35 text-ink text-xs font-semibold hover:bg-emerald-50">
+            ✨ Shuffle Arrangement
+          </button>
+          <button onclick="clearBouquetStems()" class="px-3 py-1.5 rounded-xl bg-ivory border border-red-200 text-red-600 text-xs font-semibold hover:bg-red-50">
+            Clear
+          </button>
+          <button onclick="finishBouquetStep(event)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-coral to-rosepop text-white text-xs sm:text-sm font-bold hover:opacity-95 shadow-sm">
+            <span id="bouquet-done-btn-label">Done with Bouquet</span> →
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- LEFT CATALOG & WRAPPING CONTROLS -->
+        <div class="lg:col-span-5 bg-white rounded-3xl border border-botanical/25 shadow-lg p-4 space-y-4">
+          <div class="grid grid-cols-3 gap-1 bg-ivory p-1.5 rounded-xl border border-botanical/20 text-xs font-semibold">
+            <button onclick="switchBouquetTool('flowers')" id="btool-btn-flowers" class="py-2 rounded-lg bg-white text-emeralddeep shadow-xs">32 Blooms</button>
+            <button onclick="switchBouquetTool('wrap')" id="btool-btn-wrap" class="py-2 rounded-lg text-ink/70">Wrap &amp; Bow</button>
+            <button onclick="switchBouquetTool('note')" id="btool-btn-note" class="py-2 rounded-lg text-ink/70">Gift Tag</button>
+          </div>
+
+          <!-- TAB 1: 32 PHOTOREALISTIC BOTANICAL FLOWERS -->
+          <div id="btool-panel-flowers" class="space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-ink/75">Tap flowers to add into your bouquet (<span id="stem-count" class="text-emeralddeep font-bold">0</span> stems)</span>
+            </div>
+            <div id="flower-catalog-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 max-h-[430px] overflow-y-auto pr-1"></div>
+          </div>
+
+          <!-- TAB 2: LUXURY WRAPPING PAPER (4 SILHOUETTES + 12 PRINTS) & SATIN BOW -->
+          <div id="btool-panel-wrap" class="hidden space-y-4">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-ink/70 mb-1.5">Florist Wrapping Silhouette</label>
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <button onclick="setBouquetWrapStyle('korean')" class="p-2.5 rounded-xl border border-botanical/30 hover:bg-emerald-50 font-medium">🌸 Korean Layered Fold</button>
+                <button onclick="setBouquetWrapStyle('cone')" class="p-2.5 rounded-xl border border-botanical/30 hover:bg-emerald-50 font-medium">📐 Classic Cone Wrap</button>
+                <button onclick="setBouquetWrapStyle('kraft')" class="p-2.5 rounded-xl border border-botanical/30 hover:bg-emerald-50 font-medium">🔔 Kraft Bell Wrap</button>
+                <button onclick="setBouquetWrapStyle('pleated')" class="p-2.5 rounded-xl border border-botanical/30 hover:bg-emerald-50 font-medium">🪭 Luxury Pleated Wrap</button>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-xs font-bold uppercase tracking-wider text-ink/70">Paper Color (Any Color)</label>
+                <input type="color" id="wrap-color-picker" value="#F7E9D7" onchange="setBouquetWrapColor(this.value)" class="w-8 h-8 rounded cursor-pointer border border-ink/20" />
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <button onclick="setBouquetWrapColor('#F7E9D7')" class="w-7 h-7 rounded-full bg-[#F7E9D7] border border-ink/20" title="Warm Kraft"></button>
+                <button onclick="setBouquetWrapColor('#FFE4E8')" class="w-7 h-7 rounded-full bg-[#FFE4E8] border border-ink/20" title="Blush Silk"></button>
+                <button onclick="setBouquetWrapColor('#FFFDF9')" class="w-7 h-7 rounded-full bg-[#FFFDF9] border border-ink/20" title="Pearl White"></button>
+                <button onclick="setBouquetWrapColor('#D1FAE5')" class="w-7 h-7 rounded-full bg-[#D1FAE5] border border-ink/20" title="Sage Mint"></button>
+                <button onclick="setBouquetWrapColor('#FEF3C7')" class="w-7 h-7 rounded-full bg-[#FEF3C7] border border-ink/20" title="Marigold Cream"></button>
+                <button onclick="setBouquetWrapColor('#272226')" class="w-7 h-7 rounded-full bg-[#272226] border border-ink/20" title="Noir Matte"></button>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-ink/70 mb-1.5">Minimal Printed Wrapping Paper (12 Patterns)</label>
+              <div class="grid grid-cols-3 gap-1.5 text-xs">
+                <button onclick="setBouquetWrapPattern('solid')" class="p-2 rounded-xl border border-botanical/25 hover:bg-emerald-50">Plain Matte</button>
+                <button onclick="setBouquetWrapPattern('balls')" class="p-2 rounded-xl border border-botanical/25 hover:bg-emerald-50">⚪ Tiny Dots</button>
+                <button onclick="setBouquetWrapPattern('stripes')" class="p-2 rounded-xl border border-botanical/25 hover:bg-emerald-50">║ Pinstripes</button>
+                <button onclick="setBouquetWrapPattern('leaves')" class="p-2 rounded-xl border border-botanical/25 hover:bg-emerald-50">🌿 Botanical</button>
+                <button onclick="setBouquetWrapPattern('hearts')" class="p-2 rounded-xl border border-botanical/25 hover:bg-emerald-50">♡ Micro Hearts</button>
+                <button onclick="setBouquetWrapPattern('kraft')" class="p-2 rounded-xl border border-botanical/25 hover:bg-emerald-50">📜 Kraft Grain</button>
+                <button onclick="setBouquetWrapPattern('linen')" class="p-2 rounded-xl border border-botanical/25 hover:bg-emerald-50">🧵 Linen Weave</button>
+                <button onclick="setBouquetWrapPattern('gold')" class="p-2 rounded-xl border border-botanical/25 hover:bg-emerald-50">✨ Gold Flecks</button>
+                <button onclick="setBouquetWrapPattern('stars')" class="p-2 rounded-xl border border-botanical/25 hover:bg-emerald-50">✦ Starlight</button>
+                <button onclick="setBouquetWrapPattern('gingham')" class="p-2 rounded-xl border border-botanical/25 hover:bg-emerald-50">🏁 Soft Check</button>
+                <button onclick="setBouquetWrapPattern('terrazzo')" class="p-2 rounded-xl border border-botanical/25 hover:bg-emerald-50">🎨 Terrazzo</button>
+                <button onclick="setBouquetWrapPattern('newsprint')" class="p-2 rounded-xl border border-botanical/25 hover:bg-emerald-50">📰 Script Lines</button>
+              </div>
+            </div>
+
+            <div class="pt-2 border-t border-botanical/20">
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-xs font-bold uppercase tracking-wider text-ink/70">Satin Ribbon &amp; Print</label>
+                <input type="color" id="bq-ribbon-picker" value="#E11D48" onchange="setBouquetRibbonColor(this.value)" class="w-8 h-8 rounded cursor-pointer border border-ink/20" />
+              </div>
+              <div class="grid grid-cols-3 gap-1.5 text-xs">
+                <button onclick="setBouquetRibbonPrint('solid')" class="p-2 rounded-xl border border-botanical/25 hover:bg-emerald-50">Satin Silk</button>
+                <button onclick="setBouquetRibbonPrint('balls')" class="p-2 rounded-xl border border-botanical/25 hover:bg-emerald-50">⚪ Ball Prints</button>
+                <button onclick="setBouquetRibbonPrint('hearts')" class="p-2 rounded-xl border border-botanical/25 hover:bg-emerald-50">🤍 Mini Hearts</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: SMALL GIFT NOTE CARD -->
+          <div id="btool-panel-note" class="hidden space-y-3">
+            <label class="block text-xs font-bold uppercase tracking-wider text-ink/70">Attach a Small Gift Tag</label>
+            <div class="flex flex-wrap gap-1.5 text-xs">
+              <button onclick="applyNoteTemplate('With love from ')" class="px-2.5 py-1 rounded-full bg-blush hover:bg-coral hover:text-white transition text-ink">With love from...</button>
+              <button onclick="applyNoteTemplate('Forever yours, ')" class="px-2.5 py-1 rounded-full bg-blush hover:bg-coral hover:text-white transition text-ink">Forever yours...</button>
+              <button onclick="applyNoteTemplate('Thinking of you, ')" class="px-2.5 py-1 rounded-full bg-blush hover:bg-coral hover:text-white transition text-ink">Thinking of you...</button>
+              <button onclick="applyNoteTemplate('Happy Birthday, my love — ')" class="px-2.5 py-1 rounded-full bg-blush hover:bg-coral hover:text-white transition text-ink">Happy Birthday...</button>
+            </div>
+            <textarea id="bouquet-note-input" rows="3" placeholder="e.g., With love from Maya ♥" oninput="updateBouquetNote(this.value)" class="w-full p-3 rounded-2xl border border-botanical/30 bg-white text-sm font-script text-xl focus:outline-none focus:border-coral"></textarea>
+          </div>
+        </div>
+
+        <!-- RIGHT LIVE INTERACTIVE BOUQUET STAGE -->
+        <div class="lg:col-span-7 bg-gradient-to-b from-white to-blush/20 rounded-3xl border border-botanical/25 p-4 sm:p-6 flex flex-col items-center justify-center relative min-h-[560px] shadow-md">
+          <div class="text-center mb-2 text-xs text-ink/65">
+            Automatically arranged into a lush hand-tied florist dome • Use chips below to adjust stems
+          </div>
+
+          <div id="bouquet-stage" class="relative w-full max-w-[440px] h-[470px] flex items-center justify-center select-none"></div>
+
+          <!-- Selected Stems Quick +/- Chips -->
+          <div id="bouquet-stem-chips" class="w-full max-w-lg mt-2 flex flex-wrap items-center justify-center gap-1.5 max-h-24 overflow-y-auto px-2"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         4. FINISH & SHARE VIEW (SIDE-BY-SIDE LIVE STAGE + LINK GENERATOR)
+         ========================================================================== -->
+    <section id="view-share" class="hidden max-w-6xl mx-auto px-4 sm:px-6 py-8">
+      <div class="bg-white rounded-[2.2rem] border-2 border-coral/20 shadow-2xl p-6 sm:p-10 space-y-8 canva-slide-rise">
+        <div class="text-center space-y-2">
+          <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-gradient-to-r from-blush to-amber-100 text-coral text-xs font-bold uppercase tracking-widest">
+            ✨ Keepsake Presentation Ready
+          </div>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-ink">Your Keepsake Together</h2>
+          <p class="text-sm text-ink/75 max-w-xl mx-auto">
+            Preview your sealed letter and photorealistic bouquet together below, then copy your private link to share!
+          </p>
+        </div>
+
+        <!-- Side-by-Side Live Preview Stage on Finish & Share -->
+        <div id="share-together-stage" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-gradient-to-br from-ivory via-blush/20 to-amber-50/40 rounded-3xl p-5 sm:p-8 border border-coral/15 shadow-inner">
+          <div id="share-bouquet-preview-col" class="lg:col-span-6 flex flex-col items-center justify-center canva-pop-in">
+            <span class="text-[11px] uppercase tracking-widest text-emeralddeep font-bold mb-1">Botanical Bouquet</span>
+            <div id="share-bouquet-render" class="relative w-full max-w-[360px] h-[460px] flex items-center justify-center"></div>
+          </div>
+          <div id="share-letter-preview-col" class="lg:col-span-6 flex flex-col items-center justify-center space-y-3 canva-pop-in" style="animation-delay: 0.12s;">
+            <span class="text-[11px] uppercase tracking-widest text-coral font-bold">Sealed Letter (Click to Test Pop-Out)</span>
+            <div id="share-envelope-render" class="my-4"></div>
+            <span id="share-letter-meta" class="text-xs text-ink/65"></span>
+          </div>
+        </div>
+
+        <!-- Link Generator & Backup Controls -->
+        <div class="max-w-2xl mx-auto space-y-4 pt-2">
+          <div class="bg-ivory p-4 rounded-2xl border border-coral/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <label class="text-xs font-bold text-ink/80">Optional Secret Passcode:</label>
+            <input type="text" id="gift-passcode-input" placeholder="Leave blank or type a secret word..." oninput="regenerateShareLink()" class="flex-1 px-3.5 py-2 rounded-xl border border-ink/15 bg-white text-xs" />
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input type="text" id="generated-share-url" readonly class="flex-1 px-4 py-3 rounded-2xl bg-ivory border border-coral/30 text-xs font-mono text-ink/85 focus:outline-none" />
+            <button onclick="copyShareLink(event)" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-coral to-rosepop text-white font-bold text-sm hover:opacity-95 shadow-md transition whitespace-nowrap">
+              📋 Copy Private Link
+            </button>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <button onclick="launchRecipientExperience(true, event)" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-botanical to-emeralddeep text-white font-bold text-sm hover:opacity-95 shadow-md transition">
+              🎁 Full Recipient Unwrapping View
+            </button>
+            <button onclick="downloadStandaloneGiftHTML(event)" class="px-4 py-3 rounded-2xl bg-amber-100 text-amber-900 border border-marigold/40 text-xs font-bold hover:bg-amber-200/70 transition">
+              💾 Download Offline Keepsake (.html)
+            </button>
+            <button onclick="navigateTo('letter')" class="px-4 py-3 rounded-2xl border border-ink/20 text-xs font-semibold hover:bg-ivory">
+              ✎ Edit Letter
+            </button>
+            <button onclick="navigateTo('bouquet')" class="px-4 py-3 rounded-2xl border border-ink/20 text-xs font-semibold hover:bg-ivory">
+              ✎ Edit Bouquet
+            </button>
+            <button onclick="navigateTo('home')" class="px-4 py-3 rounded-2xl border border-coral/30 text-coral text-xs font-bold hover:bg-blush/40 transition">
+              🏠 Return to Homepage
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         5. UNIFIED RECIPIENT UNWRAPPING STAGE (BOUQUET + POP-OUT ENVELOPE)
+         ========================================================================== -->
+    <section id="view-recipient" class="hidden max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <!-- Optional Passcode Gate -->
+      <div id="recipient-passcode-gate" class="hidden max-w-md mx-auto bg-white rounded-3xl border-2 border-coral/25 p-8 text-center shadow-2xl my-12 space-y-4 canva-pop-in">
+        <div class="text-4xl">🔐</div>
+        <h2 class="font-serif text-2xl font-bold text-ink">A Private Keepsake Awaits</h2>
+        <p class="text-xs text-ink/70">Enter the secret word shared with you to unlock your gift.</p>
+        <input type="password" id="recipient-passcode-attempt" placeholder="Enter secret passcode..." class="w-full px-4 py-2.5 rounded-xl border border-coral/30 text-center text-sm" />
+        <button onclick="unlockRecipientGift(event)" class="w-full py-2.5 rounded-xl bg-coral text-white font-bold text-sm">Unlock Keepsake</button>
+        <p id="passcode-error-msg" class="hidden text-xs text-red-600 font-semibold">Incorrect passcode. Please try again.</p>
+      </div>
+
+      <!-- Unified Presentation Stage -->
+      <div id="recipient-main-showcase" class="space-y-8">
+        <div class="text-center space-y-2 canva-slide-rise">
+          <button id="btn-back-to-editor" onclick="navigateTo('share')" class="hidden mb-2 px-4 py-1.5 rounded-full bg-ink text-white text-xs font-semibold">
+            ← Exit Recipient Preview
+          </button>
+          <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-blush text-coral text-xs font-bold uppercase tracking-widest">
+            Special Delivery For You
+          </div>
+          <h1 class="font-serif text-3xl sm:text-5xl font-bold text-ink">A Keepsake Crafted With Love</h1>
+          <p class="text-sm text-ink/75">
+            Click the sealed envelope to untie the satin ribbon, pop out the letter, and unfold its pages!
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white/90 backdrop-blur-sm rounded-[2.2rem] p-5 sm:p-9 border-2 border-coral/15 shadow-2xl">
+          <!-- BOUQUET COLUMN -->
+          <div id="recipient-bouquet-col" class="lg:col-span-5 flex flex-col items-center justify-center bg-gradient-to-b from-ivory to-blush/25 rounded-3xl p-5 border border-botanical/20 shadow-inner canva-pop-in">
+            <span class="text-xs uppercase tracking-widest text-emeralddeep font-bold mb-1">Hand-Tied Botanical Bouquet</span>
+            <div id="recipient-bouquet-display" class="relative w-full max-w-[360px] h-[465px] flex items-center justify-center"></div>
+          </div>
+
+          <!-- LETTER COLUMN -->
+          <div id="recipient-letter-col" class="lg:col-span-7 flex flex-col items-center justify-center min-h-[480px] canva-pop-in" style="animation-delay: 0.15s;">
+            <!-- Phase 1: Sealed Interactive Envelope -->
+            <div id="recipient-envelope-stage" class="flex flex-col items-center justify-center py-8 space-y-6">
+              <div id="recipient-interactive-envelope" onclick="triggerEnvelopeOpenSequence(event)"></div>
+              <button onclick="triggerEnvelopeOpenSequence(event)" class="px-6 py-3 rounded-full bg-gradient-to-r from-coral to-rosepop text-white font-semibold text-sm shadow-lg hover:scale-105 transition">
+                💌 Tap Envelope to Open &amp; Unfold Letter
+              </button>
+            </div>
+
+            <!-- Phase 2: Unfolded Multi-Page Letter Reader -->
+            <div id="recipient-unfolded-reader" class="hidden w-full flex flex-col items-center space-y-3 animate-unfold-sheet">
+              <div class="w-full max-w-2xl flex items-center justify-between px-1">
+                <button onclick="turnRecipientPage(-1)" id="rec-prev-page" class="px-3.5 py-1.5 rounded-xl bg-white border border-coral/25 text-xs font-semibold hover:bg-blush/40 disabled:opacity-40">
+                  ← Prev Page
+                </button>
+                <span id="rec-page-indicator" class="font-serif font-bold text-sm text-ink">Page 1 of 1</span>
+                <div class="flex items-center gap-2">
+                  <button onclick="refoldEnvelopeView()" class="px-3 py-1.5 rounded-xl bg-ivory border border-coral/20 text-xs text-coral font-semibold hover:bg-blush/30">
+                    ✉️ Refold
+                  </button>
+                  <button onclick="turnRecipientPage(1)" id="rec-next-page" class="px-3.5 py-1.5 rounded-xl bg-white border border-coral/25 text-xs font-semibold hover:bg-blush/40 disabled:opacity-40">
+                    Next Page →
+                  </button>
+                </div>
+              </div>
+
+              <div class="book-stage w-full flex justify-center">
+                <div id="recipient-letter-sheet" class="paper-sheet w-full max-w-2xl min-h-[540px] rounded-2xl p-6 sm:p-10 relative overflow-hidden border border-coral/20"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center pt-4">
+          <button onclick="navigateTo('home')" class="px-6 py-3 rounded-full bg-white border border-coral/30 text-coral font-bold text-sm hover:bg-blush/40 shadow-sm transition">
+            ✨ Create Your Own Letter &amp; Bouquet
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       CROSS-FLOW MODAL (ADD BOUQUET OR WRITE LETTER)
+       ========================================================================== -->
+  <div id="crossflow-modal" class="hidden fixed inset-0 z-50 bg-ink/55 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-7 border-2 border-coral/25 shadow-2xl text-center space-y-5 canva-pop-in">
+      <div id="crossflow-icon" class="text-4xl">💐</div>
+      <h3 id="crossflow-title" class="font-serif text-2xl font-bold text-ink">Pair With a Bouquet?</h3>
+      <p id="crossflow-desc" class="text-sm text-ink/75 leading-relaxed"></p>
+      <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
+        <button id="crossflow-primary-btn" class="flex-1 py-3 px-4 rounded-2xl bg-gradient-to-r from-botanical to-emeralddeep text-white font-bold text-sm hover:opacity-95 shadow-sm"></button>
+        <button onclick="closeCrossflowAndShare(event)" class="flex-1 py-3 px-4 rounded-2xl bg-gradient-to-r from-coral to-rosepop text-white font-bold text-sm hover:opacity-95 shadow-sm">
+          Finish &amp; Share
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       CANVA-STYLE POP-OUT LIGHTBOX FOR PHOTOS & VIDEOS
+       ========================================================================== -->
+  <div id="media-lightbox" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4" onclick="closeLightbox()">
+    <div class="relative max-w-3xl w-full bg-white rounded-3xl p-3 sm:p-4 shadow-2xl canva-pop-in" onclick="event.stopPropagation()">
+      <button onclick="closeLightbox()" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-coral text-white font-bold shadow-lg flex items-center justify-center hover:scale-105">
+        ✕
+      </button>
+      <div id="lightbox-content" class="flex items-center justify-center max-h-[78vh] overflow-hidden rounded-2xl bg-black"></div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       APPLICATION JAVASCRIPT ENGINE
+       ========================================================================== -->
+  <script>
+    /* ============================================================================
+       1. APPLICATION STATE
+       ============================================================================ */
+    const defaultState = {
+      creationMode: 'both', // 'letter-only' | 'bouquet-only' | 'both'
+      hasLetter: false,
+      hasBouquet: false,
+      passcode: '',
+      letter: {
+        currentPage: 0,
+        foldType: 'square',
+        envelopeStyle: { type: 'pattern', value: 'florals', color: '#FFE4E8' },
+        ribbonColor: '#E11D48',
+        ribbonPrint: 'balls',
+        pages: [
+          {
+            id: 'page-1',
+            bgColor: '#FFFDF9',
+            texture: 'coffee',
+            textBlocks: [
+              {
+                id: 'tb-1',
+                text: 'My Dearest,\n\nEvery word on this page carries a piece of my heart to yours...',
+                x: 42,
+                y: 44,
+                width: 440,
+                height: 150,
+                fontFamily: "'Dancing Script', cursive",
+                fontSize: '26px',
+                color: '#291D1E',
+                textAlign: 'left'
+              }
+            ],
+            elements: []
+          }
+        ]
+      },
+      bouquet: {
+        wrapStyle: 'korean',
+        wrapColor: '#F7E9D7',
+        wrapPattern: 'balls',
+        ribbonColor: '#E11D48',
+        ribbonPrint: 'balls',
+        noteText: 'With love from me to you ♥',
+        stems: []
+      }
+    };
+
+    let appState = JSON.parse(JSON.stringify(defaultState));
+    let activeTextBlockId = 'tb-1';
+    let selectedElementId = null;
+    let bouquetShuffleSeed = 0;
+    let recipientGiftData = null;
+    let recipientPageIndex = 0;
+
+    /* ============================================================================
+       2. CANVA-STYLE CELEBRATION SPARKLE BURST
+       ============================================================================ */
+    function triggerCanvaSparkles(ev, symbols = ['✨', '🌸', '💖', '❀']) {
+      const cx = ev && ev.clientX ? ev.clientX : window.innerWidth / 2;
+      const cy = ev && ev.clientY ? ev.clientY : window.innerHeight / 2;
+      for (let i = 0; i < 10; i++) {
+        const sp = document.createElement('div');
+        sp.className = 'canva-sparkle text-base';
+        sp.textContent = symbols[i % symbols.length];
+        const angle = (Math.PI * 2 * i) / 10;
+        const dist = 45 + Math.random() * 55;
+        sp.style.left = `${cx}px`;
+        sp.style.top = `${cy}px`;
+        sp.style.setProperty('--tx', `${Math.cos(angle) * dist}px`);
+        sp.style.setProperty('--ty', `${Math.sin(angle) * dist - 20}px`);
+        document.body.appendChild(sp);
+        setTimeout(() => sp.remove(), 950);
+      }
+    }
+
+    /* ============================================================================
+       3. STICKERS (SMILEYS, FLOWERS, FOODS, LOVE — 12 EACH)
+       ============================================================================ */
+    const STICKER_LIBRARY = {
+      smileys: [
+        { id: 'sm-blush', label: 'Warm Blush', emoji: '😊', badge: '' },
+        { id: 'sm-hearteyes', label: 'Heart Eyes', emoji: '😍', badge: '' },
+        { id: 'sm-plead', label: 'Sweet Eyes', emoji: '🥺', badge: '' },
+        { id: 'sm-kiss', label: 'Blowing Kiss', emoji: '😘', badge: '' },
+        { id: 'sm-stars', label: 'Star Struck', emoji: '🤩', badge: '' },
+        { id: 'sm-hug', label: 'Warm Hug', emoji: '🤗', badge: '' },
+        { id: 'sm-teary', label: 'Happy Tears', emoji: '🥹', badge: '' },
+        { id: 'sm-angel', label: 'Sweet Angel', emoji: '😇', badge: '' },
+        { id: 'sm-melt', label: 'Melting Smile', emoji: '🫠', badge: '' },
+        { id: 'sm-hearts3', label: 'In Love', emoji: '🥰', badge: '' },
+        { id: 'sm-wink', label: 'Cheeky Wink', emoji: '😉', badge: '' },
+        { id: 'sm-sparkle', label: 'Glowing Joy', emoji: '✨😊', badge: '' }
+      ],
+      flowers: [
+        { id: 'fl-rose', label: 'Crimson Rose', emoji: '🌹', badge: '' },
+        { id: 'fl-tulip', label: 'Pink Tulip', emoji: '🌷', badge: '' },
+        { id: 'fl-sun', label: 'Sunflower', emoji: '🌻', badge: '' },
+        { id: 'fl-sakura', label: 'Cherry Blossom', emoji: '🌸', badge: '' },
+        { id: 'fl-hibiscus', label: 'Hibiscus', emoji: '🌺', badge: '' },
+        { id: 'fl-daisy', label: 'Sweet Daisy', emoji: '🌼', badge: '' },
+        { id: 'fl-lotus', label: 'Pink Lotus', emoji: '🪷', badge: '' },
+        { id: 'fl-bouquet', label: 'Mini Bouquet', emoji: '💐', badge: '' },
+        { id: 'fl-clover', label: 'Lucky Clover', emoji: '🍀', badge: '' },
+        { id: 'fl-herb', label: 'Fresh Leaf', emoji: '🌿', badge: '' },
+        { id: 'fl-hyacinth', label: 'Lavender Bloom', emoji: '🪻', badge: '' },
+        { id: 'fl-rosette', label: 'Petal Crest', emoji: '🏵️', badge: '' }
+      ],
+      foods: [
+        { id: 'fd-berry', label: 'Strawberry', emoji: '🍓', badge: '' },
+        { id: 'fd-croissant', label: 'Croissant', emoji: '🥐', badge: '' },
+        { id: 'fd-coffee', label: 'Warm Latte', emoji: '☕', badge: '' },
+        { id: 'fd-boba', label: 'Boba Tea', emoji: '🧋', badge: '' },
+        { id: 'fd-cupcake', label: 'Sweet Cupcake', emoji: '🧁', badge: '' },
+        { id: 'fd-cake', label: 'Shortcake', emoji: '🍰', badge: '' },
+        { id: 'fd-cherry', label: 'Cherries', emoji: '🍒', badge: '' },
+        { id: 'fd-peach', label: 'Juicy Peach', emoji: '🍑', badge: '' },
+        { id: 'fd-choco', label: 'Chocolate', emoji: '🍫', badge: '' },
+        { id: 'fd-icecream', label: 'Gelato Cone', emoji: '🍨', badge: '' },
+        { id: 'fd-pancake', label: 'Pancakes', emoji: '🥞', badge: '' },
+        { id: 'fd-honey', label: 'Sweet Honey', emoji: '🍯', badge: '' }
+      ],
+      love: [
+        { id: 'lv-beat', label: 'Beating Heart', emoji: '💓', badge: '' },
+        { id: 'lv-letter', label: 'Love Letter', emoji: '💌', badge: '' },
+        { id: 'lv-cupid', label: 'Cupid Heart', emoji: '💘', badge: '' },
+        { id: 'lv-ribbon', label: 'Gift Heart', emoji: '💝', badge: '' },
+        { id: 'lv-sparkle', label: 'Sparkling Heart', emoji: '💖', badge: '' },
+        { id: 'lv-two', label: 'Two Hearts', emoji: '💕', badge: '' },
+        { id: 'lv-kiss', label: 'Kiss Mark', emoji: '💋', badge: '' },
+        { id: 'lv-ring', label: 'Promise Ring', emoji: '💍', badge: '' },
+        { id: 'lv-revolve', label: 'Orbiting Hearts', emoji: '💞', badge: '' },
+        { id: 'lv-grow', label: 'Growing Love', emoji: '💗', badge: '' },
+        { id: 'lv-bow', label: 'Satin Bow', emoji: '🎀', badge: '' },
+        { id: 'lv-xo', label: 'XOXO Seal', emoji: '❤️‍🔥', badge: 'XOXO' }
+      ]
+    };
+
+    const ENVELOPE_PATTERNS = [
+      { id: 'solid', name: 'Solid Blush', css: 'background-color: #FFE4E8;' },
+      { id: 'polka', name: 'Polka Dots', css: 'background-color: #FFF1F2; background-image: radial-gradient(#F43F5E 2px, transparent 2.5px); background-size: 16px 16px;' },
+      { id: 'stripes', name: 'Candy Stripes', css: 'background: repeating-linear-gradient(90deg, #FFF5F7 0px, #FFF5F7 10px, #FECDD3 10px, #FECDD3 20px);' },
+      { id: 'gingham', name: 'Rose Gingham', css: 'background-color: #FFF5F5; background-image: linear-gradient(90deg, rgba(244,63,94,0.2) 50%, transparent 50%), linear-gradient(rgba(244,63,94,0.2) 50%, transparent 50%); background-size: 20px 20px;' },
+      { id: 'florals', name: 'Dainty Florals', css: 'background-color: #FFF9F5; background-image: radial-gradient(#FB7185 3px, transparent 3.5px), radial-gradient(#10B981 2px, transparent 2.5px); background-size: 24px 24px; background-position: 0 0, 12px 12px;' },
+      { id: 'hearts', name: 'Sweet Hearts', css: 'background-color: #FFE4E6; background-image: radial-gradient(circle at 8px 8px, #E11D48 3px, transparent 3.5px), radial-gradient(circle at 13px 8px, #E11D48 3px, transparent 3.5px); background-size: 24px 24px;' },
+      { id: 'stars', name: 'Midnight Stars', css: 'background-color: #1E1B4B; background-image: radial-gradient(#FBBF24 1.8px, transparent 2px); background-size: 18px 18px;' },
+      { id: 'plaid', name: 'Warm Plaid', css: 'background-color: #FEF3C7; background-image: repeating-linear-gradient(0deg, rgba(244,63,94,0.16) 0 4px, transparent 4px 18px), repeating-linear-gradient(90deg, rgba(16,185,129,0.18) 0 4px, transparent 4px 18px);' },
+      { id: 'herringbone', name: 'Herringbone', css: 'background-color: #F8FAFC; background-image: linear-gradient(135deg, #E2E8F0 25%, transparent 25%), linear-gradient(225deg, #E2E8F0 25%, transparent 25%); background-size: 16px 16px;' },
+      { id: 'botanical', name: 'Emerald Leaves', css: 'background-color: #ECFDF5; background-image: radial-gradient(ellipse at center, #10B981 2.5px, transparent 3px); background-size: 22px 18px;' },
+      { id: 'celestial', name: 'Celestial Gold', css: 'background-color: #311042; background-image: radial-gradient(circle, #FBBF24 2px, transparent 2.5px), radial-gradient(circle, rgba(255,255,255,0.45) 1px, transparent 1.5px); background-size: 28px 28px; background-position: 0 0, 14px 14px;' },
+      { id: 'watercolor', name: 'Sunset Wash', css: 'background: linear-gradient(135deg, #FECDD3 0%, #FEF3C7 50%, #D1FAE5 100%);' },
+      { id: 'newsprint', name: 'Love Letters', css: 'background-color: #FDF8F2; background-image: repeating-linear-gradient(0deg, rgba(120,80,60,0.12) 0 1px, transparent 1px 6px);' },
+      { id: 'damask', name: 'Royal Crimson', css: 'background-color: #881337; background-image: radial-gradient(circle, rgba(253,224,71,0.3) 4px, transparent 5px); background-size: 22px 22px;' },
+      { id: 'chevron', name: 'Peach Chevron', css: 'background-color: #FFF7ED; background-image: linear-gradient(135deg, #FED7AA 25%, transparent 25%), linear-gradient(225deg, #FED7AA 25%, transparent 25%); background-size: 20px 10px;' },
+      { id: 'confetti', name: 'Party Confetti', css: 'background-color: #FFFFFF; background-image: radial-gradient(#F43F5E 2.2px, transparent 2.5px), radial-gradient(#F59E0B 2.2px, transparent 2.5px), radial-gradient(#10B981 2.2px, transparent 2.5px); background-size: 24px 24px; background-position: 0 0, 8px 12px, 16px 6px;' }
+    ];
+
+    /* ============================================================================
+       4. 32 PHOTOREALISTIC BOTANICAL FLOWERS (MULTI-LAYERED SHADED SVG ART)
+       ============================================================================ */
+    const FLOWERS_32 = [
+      { id: 'crimson-rose', name: 'Crimson Velvet Rose', p1: '#FB7185', p2: '#BE123C', p3: '#881337', center: '#4C0519', type: 'rose' },
+      { id: 'blush-peony', name: 'Blush Peony', p1: '#FFE4E6', p2: '#FDA4AF', p3: '#F43F5E', center: '#FDE047', type: 'peony' },
+      { id: 'sunlit-tulip', name: 'Sunlit Tulip', p1: '#FDBA74', p2: '#F97316', p3: '#C2410C', center: '#7C2D12', type: 'tulip' },
+      { id: 'golden-sunflower', name: 'Golden Sunflower', p1: '#FEF08A', p2: '#FACC15', p3: '#CA8A04', center: '#3E1A04', type: 'sunflower' },
+      { id: 'lavender-sprig', name: 'Lavender Sprig', p1: '#D8B4FE', p2: '#A855F7', p3: '#6B21A8', center: '#4C1D95', type: 'spike' },
+      { id: 'white-daisy', name: 'White Daisy', p1: '#FFFFFF', p2: '#F1F5F9', p3: '#CBD5E1', center: '#F59E0B', type: 'sunflower' },
+      { id: 'coral-ranunculus', name: 'Coral Ranunculus', p1: '#FECDD3', p2: '#FB7185', p3: '#E11D48', center: '#9F1239', type: 'rose' },
+      { id: 'blue-hydrangea', name: 'Blue Hydrangea', p1: '#BAE6FD', p2: '#38BDF8', p3: '#0284C7', center: '#FEF9C3', type: 'cluster' },
+      { id: 'cherry-blossom', name: 'Pink Cherry Blossom', p1: '#FCE7F3', p2: '#F9A8D4', p3: '#EC4899', center: '#BE185D', type: 'sakura' },
+      { id: 'stargazer-lily', name: 'Stargazer Lily', p1: '#FFF1F2', p2: '#F43F5E', p3: '#9F1239', center: '#84CC16', type: 'lily' },
+      { id: 'marigold-bloom', name: 'Marigold Bloom', p1: '#FDE047', p2: '#F97316', p3: '#C2410C', center: '#7C2D12', type: 'peony' },
+      { id: 'forget-me-not', name: 'Forget-Me-Not', p1: '#93C5FD', p2: '#3B82F6', p3: '#1D4ED8', center: '#FACC15', type: 'cluster' },
+      { id: 'orchid-blossom', name: 'Orchid Blossom', p1: '#F5D0FE', p2: '#D946EF', p3: '#86198F', center: '#FACC15', type: 'orchid' },
+      { id: 'poppy-flower', name: 'Poppy Flower', p1: '#FCA5A5', p2: '#EF4444', p3: '#991B1B', center: '#18181B', type: 'sakura' },
+      { id: 'camellia', name: 'Camellia', p1: '#FECDD3', p2: '#F43F5E', p3: '#9F1239', center: '#FDE047', type: 'rose' },
+      { id: 'dahlia', name: 'Dahlia', p1: '#FDE68A', p2: '#F59E0B', p3: '#B45309', center: '#78350F', type: 'peony' },
+      { id: 'anemone', name: 'Anemone', p1: '#FFFFFF', p2: '#E2E8F0', p3: '#94A3B8', center: '#0F172A', type: 'sakura' },
+      { id: 'freesia', name: 'Freesia', p1: '#FEF9C3', p2: '#FACC15', p3: '#EAB308', center: '#CA8A04', type: 'tulip' },
+      { id: 'gardenia', name: 'Gardenia', p1: '#FFFFFF', p2: '#FEFCE8', p3: '#E2E8F0', center: '#FDE047', type: 'rose' },
+      { id: 'hibiscus', name: 'Hibiscus', p1: '#FDA4AF', p2: '#E11D48', p3: '#881337', center: '#FACC15', type: 'lily' },
+      { id: 'iris', name: 'Iris', p1: '#C4B5FD', p2: '#7C3AED', p3: '#4C1D95', center: '#FACC15', type: 'orchid' },
+      { id: 'jasmine', name: 'Jasmine', p1: '#FFFFFF', p2: '#FEF9C3', p3: '#ECFCCB', center: '#84CC16', type: 'sakura' },
+      { id: 'magnolia', name: 'Magnolia', p1: '#FFF1F2', p2: '#FBCFE8', p3: '#DB2777', center: '#9D174D', type: 'lily' },
+      { id: 'daffodil', name: 'Narcissus Daffodil', p1: '#FEF9C3', p2: '#FDE047', p3: '#EAB308', center: '#EA580C', type: 'lily' },
+      { id: 'pansy', name: 'Pansy', p1: '#DDD6FE', p2: '#8B5CF6', p3: '#4C1D95', center: '#FACC15', type: 'orchid' },
+      { id: 'sweet-pea', name: 'Sweet Pea', p1: '#FBCFE8', p2: '#F472B6', p3: '#BE185D', center: '#831843', type: 'orchid' },
+      { id: 'zinnia', name: 'Zinnia', p1: '#FDBA74', p2: '#F43F5E', p3: '#9F1239', center: '#FACC15', type: 'sunflower' },
+      { id: 'carnation', name: 'Carnation', p1: '#FFE4E6', p2: '#FB7185', p3: '#E11D48', center: '#9F1239', type: 'peony' },
+      { id: 'cosmos', name: 'Cosmos', p1: '#FBCFE8', p2: '#EC4899', p3: '#9D174D', center: '#FACC15', type: 'sunflower' },
+      { id: 'delphinium', name: 'Delphinium', p1: '#BAE6FD', p2: '#2563EB', p3: '#1E3A8A', center: '#FFFFFF', type: 'spike' },
+      { id: 'eucalyptus', name: 'Eucalyptus Branch', p1: '#6EE7B7', p2: '#10B981', p3: '#047857', center: '#064E3B', type: 'foliage' },
+      { id: 'babys-breath', name: "Baby's Breath Cloud", p1: '#FFFFFF', p2: '#F8FAFC', p3: '#E2E8F0', center: '#FEF08A', type: 'cloud' }
+    ];
+
+    function getPhotorealisticFlowerSVG(fl, size = 76) {
+      const uid = fl.id + '-' + Math.random().toString(36).slice(2, 7);
+      let head = '';
+
+      if (fl.type === 'rose') {
+        let backRing = '';
+        for (let i = 0; i < 7; i++) {
+          backRing += `<path d="M32 6 C44 6, 48 22, 32 28 C16 22, 20 6, 32 6 Z" fill="url(#rad-${uid})" stroke="${fl.p3}" stroke-width="0.5" transform="rotate(${i * 51.4} 32 25)"/>`;
+        }
+        let midRing = '';
+        for (let i = 0; i < 5; i++) {
+          midRing += `<path d="M32 10 C41 10, 44 22, 32 26 C20 22, 23 10, 32 10 Z" fill="url(#lin-${uid})" stroke="${fl.p3}" stroke-width="0.5" transform="rotate(${i * 72 + 18} 32 25)"/>`;
+        }
+        head = `
+          ${backRing}
+          ${midRing}
+          <circle cx="32" cy="25" r="8.5" fill="${fl.p2}" stroke="${fl.p3}" stroke-width="0.6"/>
+          <path d="M26 25 C26 19, 38 19, 38 25 C38 30, 28 30, 28 25 C28 22, 35 22, 35 25 C35 27, 31 27, 31 25" fill="none" stroke="${fl.center}" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M27 21 Q32 18 37 21" fill="none" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="1" stroke-linecap="round"/>
+        `;
+      } else if (fl.type === 'peony') {
+        let outer = '';
+        for (let i = 0; i < 10; i++) {
+          outer += `<path d="M32 4 C40 7, 42 18, 32 26 C22 18, 24 7, 32 4 Z" fill="url(#rad-${uid})" stroke="${fl.p3}" stroke-width="0.4" transform="rotate(${i * 36} 32 25)"/>`;
+        }
+        let inner = '';
+        for (let i = 0; i < 8; i++) {
+          inner += `<path d="M32 9 C38 11, 39 20, 32 25 C25 20, 26 11, 32 9 Z" fill="url(#lin-${uid})" transform="rotate(${i * 45 + 15} 32 25)"/>`;
+        }
+        head = `
+          ${outer}
+          ${inner}
+          <circle cx="32" cy="25" r="5" fill="${fl.center}"/>
+          <circle cx="30" cy="23" r="1.2" fill="#FFFFFF" fill-opacity="0.7"/>
+          <circle cx="34" cy="24" r="1.1" fill="#FFFFFF" fill-opacity="0.7"/>
+          <circle cx="32" cy="27" r="1.2" fill="#FFFFFF" fill-opacity="0.7"/>
+        `;
+      } else if (fl.type === 'sunflower') {
+        let backRays = '';
+        let frontRays = '';
+        for (let i = 0; i < 18; i++) {
+          backRays += `<path d="M32 3 Q36 14 32 25 Q28 14 32 3 Z" fill="${fl.p3}" transform="rotate(${i * 20 + 10} 32 25)"/>`;
+          frontRays += `<path d="M32 4 Q35.5 14 32 25 Q28.5 14 32 4 Z" fill="url(#lin-${uid})" stroke="${fl.p3}" stroke-width="0.35" transform="rotate(${i * 20} 32 25)"/>`;
+        }
+        head = `
+          ${backRays}
+          ${frontRays}
+          <circle cx="32" cy="25" r="9" fill="${fl.center}" stroke="#1C1917" stroke-width="0.8"/>
+          <circle cx="32" cy="25" r="6.8" fill="none" stroke="#FBBF24" stroke-width="1.1" stroke-dasharray="1.4 2"/>
+          <circle cx="32" cy="25" r="4" fill="none" stroke="#F59E0B" stroke-width="1" stroke-dasharray="1 2"/>
+        `;
+      } else if (fl.type === 'tulip') {
+        head = `
+          <path d="M21 9 C26 17, 38 17, 43 9 C45 27, 19 27, 21 9 Z" fill="${fl.p3}"/>
+          <path d="M17 12 C16 31, 32 34, 32 34 C32 34, 33 17, 25 10 C22 8, 18 10, 17 12 Z" fill="url(#rad-${uid})"/>
+          <path d="M47 12 C48 31, 32 34, 32 34 C32 34, 31 17, 39 10 C42 8, 46 10, 47 12 Z" fill="url(#rad-${uid})"/>
+          <path d="M24 11 C28 18, 36 18, 40 11 C42 29, 32 34, 32 34 C32 34, 22 29, 24 11 Z" fill="url(#lin-${uid})" stroke="${fl.p3}" stroke-width="0.5"/>
+          <path d="M32 14 L32 32" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="1"/>
+        `;
+      } else if (fl.type === 'spike') {
+        let florets = '';
+        for (let y = 6; y <= 31; y += 4.2) {
+          florets += `
+            <ellipse cx="27.5" cy="${y}" rx="4.6" ry="2.7" transform="rotate(-20 27.5 ${y})" fill="url(#lin-${uid})"/>
+            <ellipse cx="36.5" cy="${y + 1.5}" rx="4.6" ry="2.7" transform="rotate(20 36.5 ${y + 1.5})" fill="${fl.p2}"/>
+            <circle cx="32" cy="${y - 0.8}" r="2.8" fill="${fl.p1}"/>
+          `;
+        }
+        head = florets;
+      } else if (fl.type === 'cluster' || fl.type === 'cloud') {
+        const pts = [[20,14],[32,10],[44,15],[25,23],[39,23],[18,26],[32,18],[45,27],[32,29]];
+        head = pts.map(([x, y]) => `
+          <g>
+            <circle cx="${x}" cy="${y}" r="4.8" fill="url(#rad-${uid})" stroke="${fl.p3}" stroke-width="0.5"/>
+            <circle cx="${x - 1.5}" cy="${y - 1.5}" r="1.4" fill="#FFFFFF" fill-opacity="0.75"/>
+            <circle cx="${x}" cy="${y}" r="1.5" fill="${fl.center}"/>
+          </g>
+        `).join('');
+      } else if (fl.type === 'foliage') {
+        let leaves = '';
+        for (let y = 9; y <= 34; y += 6.5) {
+          leaves += `
+            <path d="M32 ${y} Q19 ${y - 5} 15 ${y + 2} Q21 ${y + 7} 32 ${y + 2}" fill="url(#lin-${uid})" stroke="${fl.p3}" stroke-width="0.4"/>
+            <path d="M32 ${y + 2} Q45 ${y - 3} 49 ${y + 4} Q43 ${y + 9} 32 ${y + 4}" fill="${fl.p2}" stroke="${fl.p3}" stroke-width="0.4"/>
+          `;
+        }
+        head = `${leaves}<ellipse cx="32" cy="6" rx="4" ry="6" fill="${fl.p1}"/>`;
+      } else {
+        // lily / sakura / orchid with veined petals & delicate stamens
+        let petals = '';
+        for (let i = 0; i < 5; i++) {
+          petals += `
+            <g transform="rotate(${i * 72} 32 25)">
+              <path d="M32 25 C22 17, 24 6, 32 4 C40 6, 42 17, 32 25 Z" fill="url(#rad-${uid})" stroke="${fl.p3}" stroke-width="0.55"/>
+              <path d="M32 23 Q30 14 32 8" fill="none" stroke="${fl.p3}" stroke-width="0.6" stroke-opacity="0.55"/>
+              <path d="M32 23 Q34 14 32 8" fill="none" stroke="#FFFFFF" stroke-width="0.6" stroke-opacity="0.55"/>
+            </g>
+          `;
+        }
+        head = `
+          ${petals}
+          <circle cx="32" cy="25" r="4.2" fill="${fl.center}"/>
+          <line x1="32" y1="25" x2="26" y2="18" stroke="${fl.center}" stroke-width="1"/>
+          <line x1="32" y1="25" x2="38" y2="18" stroke="${fl.center}" stroke-width="1"/>
+          <line x1="32" y1="25" x2="32" y2="16" stroke="${fl.center}" stroke-width="1"/>
+          <circle cx="26" cy="18" r="1.3" fill="#FACC15"/>
+          <circle cx="38" cy="18" r="1.3" fill="#FACC15"/>
+          <circle cx="32" cy="16" r="1.3" fill="#FACC15"/>
+        `;
+      }
+
+      return `
+        <svg width="${size}" height="${size * 1.48}" viewBox="0 0 64 95" class="overflow-visible pointer-events-none drop-shadow-md">
+          <defs>
+            <radialGradient id="rad-${uid}" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="${fl.p1}"/>
+              <stop offset="65%" stop-color="${fl.p2}"/>
+              <stop offset="100%" stop-color="${fl.p3}"/>
+            </radialGradient>
+            <linearGradient id="lin-${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="${fl.p1}"/>
+              <stop offset="55%" stop-color="${fl.p2}"/>
+              <stop offset="100%" stop-color="${fl.p3}"/>
+            </linearGradient>
+            <linearGradient id="stem-${uid}" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#14532D"/>
+              <stop offset="45%" stop-color="#22C55E"/>
+              <stop offset="100%" stop-color="#15803D"/>
+            </linearGradient>
+          </defs>
+          <!-- Realistic Shaded Stem & Veined Botanical Leaves -->
+          <path d="M32 27 Q29.5 60 32 92" stroke="url(#stem-${uid})" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+          <path d="M31 58 Q15 49 12 58 Q20 66 31 60" fill="#16A34A" stroke="#14532D" stroke-width="0.4"/>
+          <path d="M31 59 L16 57.5" stroke="#86EFAC" stroke-width="0.8"/>
+          <path d="M32 47 Q48 38 51 47 Q43 55 32 49" fill="#15803D" stroke="#14532D" stroke-width="0.4"/>
+          <path d="M32 48 L47 46.5" stroke="#86EFAC" stroke-width="0.8"/>
+          ${head}
+        </svg>
+      `;
+    }
+
+    /* ============================================================================
+       5. REALISTIC SATIN RIBBON & DIMENSIONAL BOW GENERATOR
+       ============================================================================ */
+    function getRibbonPatternCSS(color, print) {
+      if (print === 'balls') {
+        return `background-color: ${color}; background-image: radial-gradient(rgba(255,255,255,0.92) 2.3px, transparent 2.8px); background-size: 13px 13px;`;
+      }
+      if (print === 'hearts') {
+        return `background-color: ${color}; background-image: radial-gradient(circle at 4px 5px, rgba(255,240,245,0.92) 2px, transparent 2.5px), radial-gradient(circle at 7px 5px, rgba(255,240,245,0.92) 2px, transparent 2.5px); background-size: 14px 14px;`;
+      }
+      if (print === 'stars') {
+        return `background-color: ${color}; background-image: radial-gradient(#FEF08A 2px, transparent 2.4px); background-size: 14px 11px;`;
+      }
+      if (print === 'stitch') {
+        return `background-color: ${color}; border-top: 2px dashed rgba(255,255,255,0.85); border-bottom: 2px dashed rgba(255,255,255,0.85);`;
+      }
+      if (print === 'goldtrim') {
+        return `background-color: ${color}; border-top: 3px solid #FBBF24; border-bottom: 3px solid #FBBF24;`;
+      }
+      return `background-color: ${color};`;
+    }
+
+    function getRealisticSatinBowSVG(color, size = 94) {
+      const uid = 'bow-' + Math.random().toString(36).slice(2, 6);
+      return `
+        <svg width="${size * 1.18}" height="${size * 0.92}" viewBox="0 0 140 112" class="pointer-events-none overflow-visible" style="filter: drop-shadow(0 6px 8px rgba(24, 12, 16, 0.34));">
+          <defs>
+            <!-- Soft Silk Highlight Gradient -->
+            <linearGradient id="${uid}-sheen" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.62"/>
+              <stop offset="28%" stop-color="#FFFFFF" stop-opacity="0.16"/>
+              <stop offset="56%" stop-color="#000000" stop-opacity="0.12"/>
+              <stop offset="82%" stop-color="#FFFFFF" stop-opacity="0.24"/>
+              <stop offset="100%" stop-color="#000000" stop-opacity="0.46"/>
+            </linearGradient>
+            <!-- Deep Inner Loop Cavity Shadow -->
+            <radialGradient id="${uid}-cavity" cx="75%" cy="52%" r="65%">
+              <stop offset="0%" stop-color="#000000" stop-opacity="0.62"/>
+              <stop offset="55%" stop-color="#000000" stop-opacity="0.22"/>
+              <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.05"/>
+            </radialGradient>
+            <radialGradient id="${uid}-cavity-r" cx="25%" cy="52%" r="65%">
+              <stop offset="0%" stop-color="#000000" stop-opacity="0.62"/>
+              <stop offset="55%" stop-color="#000000" stop-opacity="0.22"/>
+              <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.05"/>
+            </radialGradient>
+            <!-- Flowing Tail Shading -->
+            <linearGradient id="${uid}-tail" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#000000" stop-opacity="0.28"/>
+              <stop offset="35%" stop-color="#FFFFFF" stop-opacity="0.42"/>
+              <stop offset="68%" stop-color="#000000" stop-opacity="0.08"/>
+              <stop offset="100%" stop-color="#000000" stop-opacity="0.34"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Flowing Draped Left & Right Tails with V-Notched Ends -->
+          <g>
+            <path d="M65 44 C53 64, 34 86, 22 103 L37 96 L44 108 C52 88, 62 66, 70 46 Z" fill="${color}"/>
+            <path d="M65 44 C53 64, 34 86, 22 103 L37 96 L44 108 C52 88, 62 66, 70 46 Z" fill="url(#${uid}-tail)"/>
+            <path d="M64 47 C52 67, 36 87, 26 101" fill="none" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="0.9" stroke-dasharray="2 2"/>
+          </g>
+          <g>
+            <path d="M75 44 C87 64, 106 86, 118 103 L103 96 L96 108 C88 88, 78 66, 70 46 Z" fill="${color}"/>
+            <path d="M75 44 C87 64, 106 86, 118 103 L103 96 L96 108 C88 88, 78 66, 70 46 Z" fill="url(#${uid}-tail)"/>
+            <path d="M76 47 C88 67, 104 87, 114 101" fill="none" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="0.9" stroke-dasharray="2 2"/>
+          </g>
+
+          <!-- Back Inner Satin Loop Folds (creates realistic 3D hollow inside the bow) -->
+          <path d="M65 37 C38 8, 12 16, 14 38 C16 56, 44 52, 65 43 Z" fill="${color}"/>
+          <path d="M65 37 C38 8, 12 16, 14 38 C16 56, 44 52, 65 43 Z" fill="url(#${uid}-cavity)"/>
+
+          <path d="M75 37 C102 8, 128 16, 126 38 C124 56, 96 52, 75 43 Z" fill="${color}"/>
+          <path d="M75 37 C102 8, 128 16, 126 38 C124 56, 96 52, 75 43 Z" fill="url(#${uid}-cavity-r)"/>
+
+          <!-- Front Sculpted Satin Bow Wings with Pinched Pleats -->
+          <g>
+            <path d="M64 36 C36 12, 10 21, 13 40 C16 57, 45 50, 64 42 Z" fill="${color}"/>
+            <path d="M64 36 C36 12, 10 21, 13 40 C16 57, 45 50, 64 42 Z" fill="url(#${uid}-sheen)"/>
+            <!-- Silk Pinch Crease Lines near Knot -->
+            <path d="M63 37 Q44 29 28 31" fill="none" stroke="#000000" stroke-opacity="0.28" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M63 40 Q43 41 25 43" fill="none" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="1.1" stroke-linecap="round"/>
+            <!-- Subtle Selvedge Stitch Edge -->
+            <path d="M62 35 C37 14, 14 22, 15 39 C17 54, 44 48, 62 41" fill="none" stroke="#FFFFFF" stroke-opacity="0.32" stroke-width="0.8" stroke-dasharray="2 2"/>
+          </g>
+
+          <g>
+            <path d="M76 36 C104 12, 130 21, 127 40 C124 57, 95 50, 76 42 Z" fill="${color}"/>
+            <path d="M76 36 C104 12, 130 21, 127 40 C124 57, 95 50, 76 42 Z" fill="url(#${uid}-sheen)"/>
+            <!-- Silk Pinch Crease Lines near Knot -->
+            <path d="M77 37 Q96 29 112 31" fill="none" stroke="#000000" stroke-opacity="0.28" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M77 40 Q97 41 115 43" fill="none" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="1.1" stroke-linecap="round"/>
+            <!-- Subtle Selvedge Stitch Edge -->
+            <path d="M78 35 C103 14, 126 22, 125 39 C123 54, 96 48, 78 41" fill="none" stroke="#FFFFFF" stroke-opacity="0.32" stroke-width="0.8" stroke-dasharray="2 2"/>
+          </g>
+
+          <!-- Gathered Center Silk Knot with Horizontal Folds -->
+          <g>
+            <rect x="61" y="30" width="18" height="21" rx="7" fill="${color}" stroke="rgba(0,0,0,0.28)" stroke-width="0.8"/>
+            <rect x="61" y="30" width="18" height="21" rx="7" fill="url(#${uid}-sheen)"/>
+            <path d="M62 36 Q70 38 78 36" fill="none" stroke="#000000" stroke-opacity="0.3" stroke-width="1"/>
+            <path d="M62 41 Q70 39 78 41" fill="none" stroke="#FFFFFF" stroke-opacity="0.48" stroke-width="1"/>
+            <path d="M62 45 Q70 47 78 45" fill="none" stroke="#000000" stroke-opacity="0.26" stroke-width="0.9"/>
+          </g>
+        </svg>
+      `;
+    }
+
+    /* ============================================================================
+       6. INITIALIZATION & HASH LINK PARSING
+       ============================================================================ */
+    async function checkIncomingGiftLink() {
+      const hash = window.location.hash || '';
+      const search = window.location.search || '';
+      let raw = '';
+
+      if (hash.includes('gift=')) {
+        raw = hash.split('gift=')[1].split('&')[0];
+      } else if (search.includes('gift=')) {
+        raw = new URLSearchParams(search).get('gift') || '';
+      }
+
+      if (raw) {
+        try {
+          raw = decodeURIComponent(raw);
+        } catch (e) {}
+        const decoded = await decodeGiftPayload(raw);
+        if (decoded) {
+          recipientGiftData = decoded;
+          launchRecipientExperience(false);
+          return true;
+        }
+      }
+      return false;
+    }
+
+    async function initApp() {
+      spawnAmbientPetals();
+      renderStickerPicker('smileys');
+      renderEnvelopePatternGrid();
+      renderFlowerCatalog();
+
+      if (await checkIncomingGiftLink()) return;
+
+      const savedDraft = localStorage.getItem('petal_parchment_v3_draft');
+      if (savedDraft) {
+        try {
+          appState = JSON.parse(savedDraft);
+          document.getElementById('resume-draft-box').classList.remove('hidden');
+        } catch (e) {}
+      }
+
+      renderLetterPage();
+      renderFoldedLetterVisual();
+      renderBouquetCanvas();
+    }
+
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+
+    window.addEventListener('hashchange', checkIncomingGiftLink);
+    window.addEventListener('popstate', checkIncomingGiftLink);
+
+    function spawnAmbientPetals() {
+      const container = document.getElementById('petal-container');
+      const symbols = ['🌸', '🍃', '❀', '✨'];
+      for (let i = 0; i < 12; i++) {
+        const el = document.createElement('div');
+        el.className = 'floating-petal text-coral/35 text-sm';
+        el.textContent = symbols[i % symbols.length];
+        el.style.left = `${Math.random() * 96}vw`;
+        el.style.animationDuration = `${13 + Math.random() * 13}s`;
+        el.style.animationDelay = `${-Math.random() * 14}s`;
+        container.appendChild(el);
+      }
+    }
+
+    function showToast(msg, icon = '✨') {
+      const banner = document.getElementById('toast-banner');
+      document.getElementById('toast-message').textContent = msg;
+      document.getElementById('toast-icon').textContent = icon;
+      banner.classList.remove('translate-y-24', 'opacity-0');
+      setTimeout(() => banner.classList.add('translate-y-24', 'opacity-0'), 2800);
+    }
+
+    function saveDraft() {
+      try {
+        localStorage.setItem('petal_parchment_v3_draft', JSON.stringify(appState));
+      } catch (e) {}
+    }
+
+    function resetAllData() {
+      localStorage.removeItem('petal_parchment_v3_draft');
+      appState = JSON.parse(JSON.stringify(defaultState));
+      document.getElementById('resume-draft-box').classList.add('hidden');
+      renderLetterPage();
+      renderBouquetCanvas();
+      showToast('Started fresh!', '🌿');
+    }
+
+    /* ============================================================================
+       7. NAVIGATION & CREATION MODES (LETTER ONLY, BOUQUET ONLY, OR BOTH)
+       ============================================================================ */
+    function navigateTo(view) {
+      ['home', 'letter', 'bouquet', 'share', 'recipient'].forEach(v => {
+        document.getElementById(`view-${v}`).classList.add('hidden');
+      });
+      document.getElementById(`view-${view}`).classList.remove('hidden');
+
+      if (view === 'letter') {
+        appState.hasLetter = true;
+        updateStepLabels();
+        renderLetterPage();
+        renderFoldedLetterVisual();
+      } else if (view === 'bouquet') {
+        appState.hasBouquet = true;
+        updateStepLabels();
+        renderBouquetCanvas();
+      } else if (view === 'share') {
+        openSharePreview();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function startCreationMode(mode, ev) {
+      triggerCanvaSparkles(ev);
+      appState.creationMode = mode;
+      if (mode === 'letter-only') {
+        appState.hasLetter = true;
+        appState.hasBouquet = false;
+        navigateTo('letter');
+      } else if (mode === 'bouquet-only') {
+        appState.hasBouquet = true;
+        appState.hasLetter = false;
+        navigateTo('bouquet');
+      } else {
+        appState.hasLetter = true;
+        appState.hasBouquet = true;
+        navigateTo('letter');
+      }
+      saveDraft();
+    }
+
+    function updateStepLabels() {
+      const lBtn = document.getElementById('letter-done-btn-label');
+      const bBtn = document.getElementById('bouquet-done-btn-label');
+      if (appState.creationMode === 'both' && appState.hasBouquet) {
+        lBtn.textContent = 'Next: Craft Bouquet';
+      } else {
+        lBtn.textContent = 'Done with Letter';
+      }
+      bBtn.textContent = 'Finish & View Together';
+    }
+
+    function finishLetterStep(ev) {
+      triggerCanvaSparkles(ev);
+      appState.hasLetter = true;
+      saveDraft();
+
+      if (appState.creationMode === 'both') {
+        navigateTo('bouquet');
+        return;
+      }
+
+      const modal = document.getElementById('crossflow-modal');
+      document.getElementById('crossflow-icon').textContent = '💐';
+      document.getElementById('crossflow-title').textContent = 'Add a Bouquet Too?';
+      document.getElementById('crossflow-desc').textContent =
+        'Your letter is sealed and ready! Would you like to craft a photorealistic bouquet to present beside it, or go straight to Finish & Share?';
+      const primaryBtn = document.getElementById('crossflow-primary-btn');
+      primaryBtn.textContent = 'Yes, Craft Bouquet';
+      primaryBtn.onclick = () => {
+        appState.hasBouquet = true;
+        modal.classList.add('hidden');
+        navigateTo('bouquet');
+      };
+      modal.classList.remove('hidden');
+    }
+
+    function finishBouquetStep(ev) {
+      triggerCanvaSparkles(ev);
+      appState.hasBouquet = true;
+      saveDraft();
+
+      if (appState.creationMode === 'both' || appState.hasLetter) {
+        openSharePreview();
+        return;
+      }
+
+      const modal = document.getElementById('crossflow-modal');
+      document.getElementById('crossflow-icon').textContent = '✉️';
+      document.getElementById('crossflow-title').textContent = 'Write a Letter Too?';
+      document.getElementById('crossflow-desc').textContent =
+        'Your bouquet is wrapped and tied in satin ribbon! Would you like to write a heartfelt letter to present alongside it, or Finish & Share now?';
+      const primaryBtn = document.getElementById('crossflow-primary-btn');
+      primaryBtn.textContent = 'Yes, Write Letter';
+      primaryBtn.onclick = () => {
+        appState.hasLetter = true;
+        modal.classList.add('hidden');
+        navigateTo('letter');
+      };
+      modal.classList.remove('hidden');
+    }
+
+    function closeCrossflowAndShare(ev) {
+      triggerCanvaSparkles(ev);
+      document.getElementById('crossflow-modal').classList.add('hidden');
+      openSharePreview();
+    }
+
+    /* ============================================================================
+       8. LETTER STUDIO ENGINE (4-SIDED RESIZING, STICKERS, MEDIA, FOLDING)
+       ============================================================================ */
+    function setLetterSubMode(mode) {
+      const editWs = document.getElementById('letter-edit-workspace');
+      const foldWs = document.getElementById('letter-fold-workspace');
+      const tabEdit = document.getElementById('tab-letter-edit');
+      const tabFold = document.getElementById('tab-letter-fold');
+
+      if (mode === 'edit') {
+        editWs.classList.remove('hidden');
+        foldWs.classList.add('hidden');
+        tabEdit.className = 'px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-coral text-white shadow-sm transition';
+        tabFold.className = 'px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-ink/75 hover:text-ink transition';
+      } else {
+        editWs.classList.add('hidden');
+        foldWs.classList.remove('hidden');
+        tabFold.className = 'px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-coral text-white shadow-sm transition';
+        tabEdit.className = 'px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-ink/75 hover:text-ink transition';
+        renderFoldedLetterVisual();
+      }
+    }
+
+    function switchLetterTool(tool) {
+      ['paper', 'text', 'stickers', 'media'].forEach(t => {
+        document.getElementById(`ltool-panel-${t}`).classList.add('hidden');
+        document.getElementById(`ltool-btn-${t}`).className = 'py-2 rounded-lg text-ink/70 hover:text-ink';
+      });
+      document.getElementById(`ltool-panel-${tool}`).classList.remove('hidden');
+      document.getElementById(`ltool-btn-${tool}`).className = 'py-2 rounded-lg bg-white text-coral shadow-xs';
+    }
+
+    function getCurrentPage() {
+      return appState.letter.pages[appState.letter.currentPage];
+    }
+
+    function updatePageColor(hex) {
+      getCurrentPage().bgColor = hex;
+      document.getElementById('paper-color-picker').value = hex;
+      renderLetterPage();
+      saveDraft();
+    }
+
+    function updatePageTexture(tex) {
+      getCurrentPage().texture = tex;
+      renderLetterPage();
+      saveDraft();
+    }
+
+    function addNewLetterPage() {
+      const newIdx = appState.letter.pages.length + 1;
+      const prevPage = getCurrentPage();
+      const newTbId = 'tb-' + Date.now();
+      appState.letter.pages.push({
+        id: 'page-' + Date.now(),
+        bgColor: prevPage.bgColor,
+        texture: prevPage.texture,
+        textBlocks: [
+          {
+            id: newTbId,
+            text: `Page ${newIdx} — Continue your letter here...`,
+            x: 42,
+            y: 44,
+            width: 440,
+            height: 150,
+            fontFamily: "'Dancing Script', cursive",
+            fontSize: '25px',
+            color: prevPage.bgColor === '#272226' ? '#FFFDF9' : '#291D1E',
+            textAlign: 'left'
+          }
+        ],
+        elements: []
+      });
+      appState.letter.currentPage = appState.letter.pages.length - 1;
+      activeTextBlockId = newTbId;
+      triggerRealisticBookTurn('next');
+      renderLetterPage();
+      saveDraft();
+      showToast(`Turned to Page ${newIdx}`, '📖');
+    }
+
+    function changeLetterPage(delta) {
+      const target = appState.letter.currentPage + delta;
+      if (target < 0 || target >= appState.letter.pages.length) return;
+      appState.letter.currentPage = target;
+      const page = getCurrentPage();
+      activeTextBlockId = page.textBlocks[0]?.id || null;
+      selectedElementId = null;
+      triggerRealisticBookTurn(delta > 0 ? 'next' : 'prev');
+      renderLetterPage();
+    }
+
+    function deleteCurrentLetterPage() {
+      if (appState.letter.pages.length <= 1) return;
+      appState.letter.pages.splice(appState.letter.currentPage, 1);
+      appState.letter.currentPage = Math.max(0, appState.letter.currentPage - 1);
+      renderLetterPage();
+      saveDraft();
+      showToast('Page removed', '🗑️');
+    }
+
+    function triggerRealisticBookTurn(dir) {
+      const canvas = document.getElementById('letter-canvas');
+      canvas.classList.remove('book-leaf-turn-next', 'book-leaf-turn-prev');
+      void canvas.offsetWidth;
+      canvas.classList.add(dir === 'next' ? 'book-leaf-turn-next' : 'book-leaf-turn-prev');
+    }
+
+    function addTextBlock() {
+      const page = getCurrentPage();
+      const id = 'tb-' + Date.now();
+      page.textBlocks.push({
+        id,
+        text: 'Write a note here...',
+        x: 60 + (page.textBlocks.length * 16) % 100,
+        y: 180 + (page.textBlocks.length * 24) % 180,
+        width: 300,
+        height: 110,
+        fontFamily: document.getElementById('font-family-select').value,
+        fontSize: document.getElementById('font-size-slider').value + 'px',
+        color: document.getElementById('ink-color-picker').value,
+        textAlign: 'left'
+      });
+      activeTextBlockId = id;
+      renderLetterPage();
+      saveDraft();
+    }
+
+    function updateActiveTextStyle(prop, val) {
+      const page = getCurrentPage();
+      const tb = page.textBlocks.find(b => b.id === activeTextBlockId) || page.textBlocks[0];
+      if (!tb) return;
+      tb[prop] = val;
+      renderLetterPage();
+      saveDraft();
+    }
+
+    function transformActiveTextCase(mode) {
+      const page = getCurrentPage();
+      const tb = page.textBlocks.find(b => b.id === activeTextBlockId) || page.textBlocks[0];
+      if (!tb) return;
+      if (mode === 'upper') tb.text = tb.text.toUpperCase();
+      if (mode === 'lower') tb.text = tb.text.toLowerCase();
+      if (mode === 'title') {
+        tb.text = tb.text.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+      }
+      renderLetterPage();
+      saveDraft();
+    }
+
+    function snapActiveText(pos) {
+      const page = getCurrentPage();
+      const tb = page.textBlocks.find(b => b.id === activeTextBlockId) || page.textBlocks[0];
+      if (!tb) return;
+      if (pos === 'top-left') { tb.x = 32; tb.y = 36; tb.textAlign = 'left'; }
+      if (pos === 'top-right') { tb.x = 240; tb.y = 36; tb.textAlign = 'right'; }
+      if (pos === 'center') { tb.x = 110; tb.y = 210; tb.textAlign = 'center'; }
+      if (pos === 'bottom-left') { tb.x = 32; tb.y = 400; tb.textAlign = 'left'; }
+      if (pos === 'bottom-right') { tb.x = 240; tb.y = 400; tb.textAlign = 'right'; }
+      renderLetterPage();
+      saveDraft();
+    }
+
+    function deleteActiveTextBlock() {
+      const page = getCurrentPage();
+      if (page.textBlocks.length <= 1) {
+        showToast('Keep at least one text box on the page', '✍️');
+        return;
+      }
+      page.textBlocks = page.textBlocks.filter(b => b.id !== activeTextBlockId);
+      activeTextBlockId = page.textBlocks[0].id;
+      renderLetterPage();
+      saveDraft();
+    }
+
+    function renderStickerPicker(category) {
+      ['smileys', 'flowers', 'foods', 'love'].forEach(c => {
+        document.getElementById(`scat-${c}`).className =
+          c === category
+            ? 'px-2.5 py-1 rounded-full text-xs font-semibold bg-coral text-white'
+            : 'px-2.5 py-1 rounded-full text-xs font-semibold bg-ivory text-ink';
+      });
+      const grid = document.getElementById('sticker-grid');
+      grid.innerHTML = '';
+      STICKER_LIBRARY[category].forEach(st => {
+        const btn = document.createElement('button');
+        btn.className = 'p-2 rounded-2xl bg-ivory hover:bg-blush/60 border border-coral/15 flex flex-col items-center justify-center transition transform hover:scale-105';
+        btn.innerHTML = `
+          <span class="text-2xl leading-none">${st.emoji}</span>
+          ${st.badge ? `<span class="mt-1 px-1.5 py-0.2 rounded bg-white text-[9px] font-bold text-coral uppercase">${st.badge}</span>` : ''}
+          <span class="text-[10px] text-ink/75 mt-1 truncate w-full text-center">${st.label}</span>
+        `;
+        btn.onclick = () => addStickerToPage(st);
+        grid.appendChild(btn);
+      });
+    }
+
+    function addStickerToPage(st) {
+      const page = getCurrentPage();
+      const id = 'el-' + Date.now();
+      page.elements.push({
+        id,
+        kind: 'sticker',
+        emoji: st.emoji,
+        badge: st.badge,
+        x: 160 + Math.random() * 130,
+        y: 160 + Math.random() * 130,
+        width: 78,
+        height: 78,
+        rotate: Math.round((Math.random() - 0.5) * 14)
+      });
+      selectedElementId = id;
+      renderLetterPage();
+      saveDraft();
+    }
+
+    function handleMediaUpload(event) {
+      const files = Array.from(event.target.files || []);
+      if (!files.length) return;
+
+      files.forEach(file => {
+        if (file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = e => {
+            compressImageDataUrl(e.target.result, 420, 0.72, compressedUrl => {
+              const id = 'el-' + Date.now() + Math.random().toString(36).slice(2, 5);
+              getCurrentPage().elements.push({
+                id,
+                kind: 'image',
+                src: compressedUrl,
+                x: 110 + Math.random() * 70,
+                y: 140 + Math.random() * 70,
+                width: 170,
+                height: 160,
+                rotate: Math.round((Math.random() - 0.5) * 8)
+              });
+              selectedElementId = id;
+              renderLetterPage();
+              saveDraft();
+              showToast('Photo added! Drag any of its 4 edges to resize.', '📸');
+            });
+          };
+          reader.readAsDataURL(file);
+        } else if (file.type.startsWith('video/')) {
+          const videoUrl = URL.createObjectURL(file);
+          const id = 'el-' + Date.now() + Math.random().toString(36).slice(2, 5);
+          getCurrentPage().elements.push({
+            id,
+            kind: 'video',
+            src: videoUrl,
+            x: 110 + Math.random() * 70,
+            y: 140 + Math.random() * 70,
+            width: 190,
+            height: 155,
+            rotate: 0
+          });
+          selectedElementId = id;
+          renderLetterPage();
+          showToast('Video added! Drag any edge to resize or tap to play.', '🎬');
+        }
+      });
+      event.target.value = '';
+    }
+
+    function compressImageDataUrl(dataUrl, maxDim, quality, callback) {
+      const img = new Image();
+      img.onload = () => {
+        let w = img.width;
+        let h = img.height;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) { h = Math.round((h * maxDim) / w); w = maxDim; }
+          else { w = Math.round((w * maxDim) / h); h = maxDim; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        callback(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.src = dataUrl;
+    }
+
+    function openLightbox(kind, src) {
+      const box = document.getElementById('media-lightbox');
+      const content = document.getElementById('lightbox-content');
+      if (kind === 'image') {
+        content.innerHTML = `<img src="${src}" class="max-h-[75vh] w-auto object-contain rounded-xl" alt="Memory" />`;
+      } else {
+        content.innerHTML = `<video src="${src}" controls autoplay class="max-h-[75vh] w-auto rounded-xl"></video>`;
+      }
+      box.classList.remove('hidden');
+    }
+
+    function closeLightbox() {
+      const box = document.getElementById('media-lightbox');
+      document.getElementById('lightbox-content').innerHTML = '';
+      box.classList.add('hidden');
+    }
+
+    function updateSelectedElementDim(prop, val) {
+      const el = getCurrentPage().elements.find(e => e.id === selectedElementId);
+      if (!el) return;
+      el[prop] = parseFloat(val);
+      renderLetterPage();
+      saveDraft();
+    }
+
+    function deleteSelectedElement() {
+      const page = getCurrentPage();
+      page.elements = page.elements.filter(e => e.id !== selectedElementId);
+      selectedElementId = null;
+      document.getElementById('selected-item-controls').classList.add('hidden');
+      renderLetterPage();
+      saveDraft();
+    }
+
+    function renderLetterPage() {
+      const page = getCurrentPage();
+      const canvas = document.getElementById('letter-canvas');
+      canvas.style.setProperty('--paper-bg', page.bgColor);
+      canvas.className = `paper-sheet w-full max-w-2xl min-h-[560px] sm:min-h-[630px] rounded-2xl p-6 sm:p-10 relative overflow-hidden border border-coral/20 ${page.texture !== 'none' ? 'texture-' + page.texture : ''}`;
+      canvas.innerHTML = '';
+
+      const idx = appState.letter.currentPage;
+      const total = appState.letter.pages.length;
+      document.getElementById('page-indicator').textContent = `Page ${idx + 1} of ${total}`;
+      document.getElementById('btn-prev-page').disabled = idx === 0;
+      document.getElementById('btn-next-page').disabled = idx === total - 1;
+      document.getElementById('btn-del-page').classList.toggle('hidden', total <= 1);
+
+      page.textBlocks.forEach(tb => {
+        if (!tb.width) tb.width = 420;
+        if (!tb.height) tb.height = 140;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = `resizable-box group ${tb.id === activeTextBlockId ? 'is-active' : ''}`;
+        wrapper.style.left = `${tb.x}px`;
+        wrapper.style.top = `${tb.y}px`;
+        wrapper.style.width = `${tb.width}px`;
+        wrapper.style.height = `${tb.height}px`;
+
+        const dragHandle = document.createElement('div');
+        dragHandle.className = 'opacity-0 group-hover:opacity-100 focus-within:opacity-100 absolute -top-5 left-2 text-[10px] bg-coral text-white px-2 py-0.5 rounded-t-md cursor-move transition z-30 shadow-xs';
+        dragHandle.textContent = '✥ Move';
+
+        const editable = document.createElement('div');
+        editable.contentEditable = true;
+        editable.spellcheck = false;
+        editable.className = 'w-full h-full outline-none whitespace-pre-wrap break-words p-2 overflow-auto relative z-10';
+        editable.style.fontFamily = tb.fontFamily;
+        editable.style.fontSize = tb.fontSize;
+        editable.style.color = tb.color;
+        editable.style.textAlign = tb.textAlign;
+        editable.style.lineHeight = '1.5';
+        editable.innerText = tb.text;
+
+        editable.addEventListener('focus', () => {
+          activeTextBlockId = tb.id;
+          selectedElementId = null;
+          document.getElementById('selected-item-controls').classList.add('hidden');
+          document.getElementById('font-family-select').value = tb.fontFamily;
+          document.getElementById('ink-color-picker').value = tb.color;
+          document.getElementById('font-size-slider').value = parseInt(tb.fontSize, 10) || 24;
+        });
+
+        editable.addEventListener('input', () => {
+          tb.text = editable.innerText;
+          saveDraft();
+        });
+
+        attach4SideResizeAndDrag(wrapper, dragHandle, tb, () => {
+          activeTextBlockId = tb.id;
+          saveDraft();
+        });
+
+        wrapper.appendChild(dragHandle);
+        wrapper.appendChild(editable);
+        canvas.appendChild(wrapper);
+      });
+
+      page.elements.forEach(el => {
+        if (!el.width) el.width = el.kind === 'sticker' ? 80 : 170;
+        if (!el.height) el.height = el.kind === 'sticker' ? 80 : 160;
+
+        const item = document.createElement('div');
+        item.className = `resizable-box ${el.id === selectedElementId ? 'is-active' : ''}`;
+        item.style.left = `${el.x}px`;
+        item.style.top = `${el.y}px`;
+        item.style.width = `${el.width}px`;
+        item.style.height = `${el.height}px`;
+        item.style.transform = `rotate(${el.rotate || 0}deg)`;
+
+        if (el.kind === 'sticker') {
+          const fontPx = Math.min(el.width, el.height) * 0.68;
+          item.innerHTML = `
+            <div class="w-full h-full flex flex-col items-center justify-center p-1 drop-shadow-sm cursor-move">
+              <span style="font-size: ${fontPx}px; line-height: 1;">${el.emoji}</span>
+              ${el.badge ? `<span class="mt-1 px-2 py-0.5 rounded-full bg-white/95 border border-coral/35 text-[10px] font-bold text-coral shadow-xs">${el.badge}</span>` : ''}
+            </div>
+          `;
+        } else if (el.kind === 'image') {
+          item.innerHTML = `
+            <div class="w-full h-full bg-white p-2 pb-6 rounded-xl shadow-md border border-ink/10 flex flex-col cursor-move">
+              <img src="${el.src}" class="w-full flex-1 object-cover rounded-lg min-h-0" alt="Memory" />
+              <div class="text-[10px] text-center text-ink/60 mt-1 font-script shrink-0">Tap to enlarge</div>
+            </div>
+          `;
+        } else if (el.kind === 'video') {
+          item.innerHTML = `
+            <div class="w-full h-full bg-white p-2 pb-6 rounded-xl shadow-md border border-ink/10 flex flex-col relative cursor-move">
+              <video src="${el.src}" class="w-full flex-1 object-cover rounded-lg bg-black min-h-0" muted></video>
+              <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <span class="w-9 h-9 rounded-full bg-coral text-white flex items-center justify-center text-xs shadow">▶</span>
+              </div>
+              <div class="text-[10px] text-center text-ink/60 mt-1 font-script shrink-0">Tap to play video</div>
+            </div>
+          `;
+        }
+
+        let moved = false;
+        attach4SideResizeAndDrag(
+          item,
+          item,
+          el,
+          () => {
+            selectedElementId = el.id;
+            const ctrl = document.getElementById('selected-item-controls');
+            ctrl.classList.remove('hidden');
+            document.getElementById('item-width-slider').value = Math.round(el.width);
+            document.getElementById('item-height-slider').value = Math.round(el.height);
+            document.getElementById('item-rotate-slider').value = el.rotate || 0;
+            saveDraft();
+          },
+          () => { moved = true; },
+          () => {
+            if (!moved && (el.kind === 'image' || el.kind === 'video')) {
+              openLightbox(el.kind, el.src);
+            }
+            moved = false;
+          }
+        );
+
+        canvas.appendChild(item);
+      });
+
+      const footer = document.createElement('div');
+      footer.className = 'absolute bottom-3 right-5 text-[11px] font-serif italic opacity-50 pointer-events-none';
+      footer.textContent = `— ${idx + 1} —`;
+      canvas.appendChild(footer);
+    }
+
+    function attach4SideResizeAndDrag(boxEl, dragHandleEl, modelObj, onUpdate, onMovedCallback, onTapCallback) {
+      const dirs = ['n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se'];
+      dirs.forEach(dir => {
+        const h = document.createElement('div');
+        h.className = `resize-handle rh-${dir}`;
+        boxEl.appendChild(h);
+
+        const startResize = e => {
+          e.stopPropagation();
+          e.preventDefault();
+          const pt = e.touches ? e.touches[0] : e;
+          const startX = pt.clientX;
+          const startY = pt.clientY;
+          const startW = modelObj.width;
+          const startH = modelObj.height;
+          const startLeft = modelObj.x;
+          const startTop = modelObj.y;
+
+          const moveResize = ev => {
+            const p = ev.touches ? ev.touches[0] : ev;
+            const dx = p.clientX - startX;
+            const dy = p.clientY - startY;
+
+            if (dir.includes('e')) modelObj.width = Math.max(60, Math.min(600, startW + dx));
+            if (dir.includes('s')) modelObj.height = Math.max(48, Math.min(560, startH + dy));
+            if (dir.includes('w')) {
+              const newW = Math.max(60, Math.min(600, startW - dx));
+              modelObj.x = startLeft + (startW - newW);
+              modelObj.width = newW;
+            }
+            if (dir.includes('n')) {
+              const newH = Math.max(48, Math.min(560, startH - dy));
+              modelObj.y = startTop + (startH - newH);
+              modelObj.height = newH;
+            }
+
+            boxEl.style.left = `${modelObj.x}px`;
+            boxEl.style.top = `${modelObj.y}px`;
+            boxEl.style.width = `${modelObj.width}px`;
+            boxEl.style.height = `${modelObj.height}px`;
+
+            if (modelObj.kind === 'sticker') {
+              const span = boxEl.querySelector('span');
+              if (span) span.style.fontSize = `${Math.min(modelObj.width, modelObj.height) * 0.68}px`;
+            }
+            if (onUpdate) onUpdate();
+          };
+
+          const endResize = () => {
+            window.removeEventListener('mousemove', moveResize);
+            window.removeEventListener('touchmove', moveResize);
+            window.removeEventListener('mouseup', endResize);
+            window.removeEventListener('touchend', endResize);
+            if (onUpdate) onUpdate();
+          };
+
+          window.addEventListener('mousemove', moveResize);
+          window.addEventListener('touchmove', moveResize, { passive: false });
+          window.addEventListener('mouseup', endResize);
+          window.addEventListener('touchend', endResize);
+        };
+
+        h.addEventListener('mousedown', startResize);
+        h.addEventListener('touchstart', startResize, { passive: false });
+      });
+
+      let sx = 0, sy = 0, ox = 0, oy = 0, dragging = false;
+      const onDown = e => {
+        if (e.target.classList.contains('resize-handle')) return;
+        if (e.target.isContentEditable && dragHandleEl !== boxEl) return;
+        const pt = e.touches ? e.touches[0] : e;
+        sx = pt.clientX;
+        sy = pt.clientY;
+        ox = modelObj.x;
+        oy = modelObj.y;
+        dragging = true;
+        if (onUpdate) onUpdate();
+      };
+
+      const onMove = e => {
+        if (!dragging) return;
+        const pt = e.touches ? e.touches[0] : e;
+        const dx = pt.clientX - sx;
+        const dy = pt.clientY - sy;
+        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+          if (onMovedCallback) onMovedCallback();
+          modelObj.x = Math.max(-10, Math.min(560, ox + dx));
+          modelObj.y = Math.max(-10, Math.min(560, oy + dy));
+          boxEl.style.left = `${modelObj.x}px`;
+          boxEl.style.top = `${modelObj.y}px`;
+          if (onUpdate) onUpdate();
+        }
+      };
+
+      const onUp = () => {
+        if (dragging) {
+          dragging = false;
+          if (onTapCallback) onTapCallback();
+        }
+      };
+
+      dragHandleEl.addEventListener('mousedown', onDown);
+      dragHandleEl.addEventListener('touchstart', onDown, { passive: true });
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('touchmove', onMove, { passive: true });
+      window.addEventListener('mouseup', onUp);
+      window.addEventListener('touchend', onUp);
+    }
+
+    function renderEnvelopePatternGrid() {
+      const grid = document.getElementById('envelope-patterns-grid');
+      grid.innerHTML = '';
+      ENVELOPE_PATTERNS.forEach(pat => {
+        const btn = document.createElement('button');
+        btn.className = 'p-1.5 rounded-xl border border-coral/20 hover:scale-105 transition flex flex-col items-center bg-white';
+        btn.innerHTML = `
+          <div class="w-full h-9 rounded-lg border border-ink/10" style="${pat.css}"></div>
+          <span class="text-[9px] text-ink/80 mt-1 truncate w-full text-center">${pat.name}</span>
+        `;
+        btn.onclick = () => setEnvelopeStyle('pattern', pat.id);
+        grid.appendChild(btn);
+      });
+    }
+
+    function setFoldType(type) {
+      appState.letter.foldType = type;
+      document.getElementById('fold-btn-square').className =
+        type === 'square'
+          ? 'p-3.5 rounded-2xl border-2 border-coral bg-blush/35 text-left transition'
+          : 'p-3.5 rounded-2xl border border-coral/20 bg-white text-left transition';
+      document.getElementById('fold-btn-round').className =
+        type === 'round'
+          ? 'p-3.5 rounded-2xl border-2 border-coral bg-blush/35 text-left transition'
+          : 'p-3.5 rounded-2xl border border-coral/20 bg-white text-left transition';
+      document.getElementById('envelope-options-box').classList.toggle('hidden', type !== 'square');
+      renderFoldedLetterVisual();
+      saveDraft();
+    }
+
+    function setEnvelopeStyle(type, value) {
+      appState.letter.envelopeStyle = { type, value, color: value };
+      renderFoldedLetterVisual();
+      saveDraft();
+    }
+
+    function setLetterRibbonColor(hex) {
+      appState.letter.ribbonColor = hex;
+      renderFoldedLetterVisual();
+      saveDraft();
+    }
+
+    function setLetterRibbonPrint(print) {
+      appState.letter.ribbonPrint = print;
+      renderFoldedLetterVisual();
+      saveDraft();
+    }
+
+    function buildInteractiveSealedEnvelopeHTML(letterData, containerId = 'preview-env') {
+      const ribCSS = getRibbonPatternCSS(letterData.ribbonColor, letterData.ribbonPrint);
+      const bowSVG = getRealisticSatinBowSVG(letterData.ribbonColor, 94);
+      const firstPage = letterData.pages[0] || { bgColor: '#FFFDF9', textBlocks: [] };
+      const snippet = (firstPage.textBlocks[0]?.text || 'My Dearest...').slice(0, 85);
+
+      if (letterData.foldType === 'square') {
+        let envCSS = `background-color: ${letterData.envelopeStyle.color || '#FFE4E8'};`;
+        if (letterData.envelopeStyle.type === 'pattern') {
+          const found = ENVELOPE_PATTERNS.find(p => p.id === letterData.envelopeStyle.value);
+          if (found) envCSS = found.css;
+        }
+        return `
+          <div id="${containerId}" class="envelope-wrapper-3d select-none">
+            <div class="envelope-body flex items-center justify-center" style="${envCSS}">
+              <div class="letter-popout-card p-4 border border-coral/20 flex flex-col justify-between" style="background-color: ${firstPage.bgColor};">
+                <div class="font-script text-base text-ink/85 leading-snug overflow-hidden">${escapeHTML(snippet)}...</div>
+                <div class="text-[10px] text-coral font-bold uppercase tracking-wider text-right">Unfolding Letter ✨</div>
+              </div>
+              <div class="envelope-pocket-sides"></div>
+              <div class="envelope-pocket-bottom"></div>
+              <div class="envelope-top-flap"></div>
+              <div class="ribbon-layer absolute inset-y-0 left-1/2 -translate-x-1/2 w-8 satin-ribbon-band z-20" style="${ribCSS}"></div>
+              <div class="ribbon-layer absolute inset-x-0 top-1/2 -translate-y-1/2 h-8 satin-ribbon-band z-20" style="${ribCSS}"></div>
+              <div class="ribbon-layer relative z-30 mt-3">${bowSVG}</div>
+            </div>
+          </div>
+        `;
+      } else {
+        const paperColor = firstPage.bgColor || '#FFFDF9';
+        return `
+          <div id="${containerId}" class="envelope-wrapper-3d select-none">
+            <div class="relative w-[320px] h-[94px] rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-105" style="background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, transparent 35%, rgba(0,0,0,0.18) 100%), ${paperColor};">
+              <div class="absolute left-0 inset-y-0 w-8 rounded-l-full bg-black/15 border-r border-black/10"></div>
+              <div class="absolute right-0 inset-y-0 w-8 rounded-r-full bg-black/15 border-l border-black/10"></div>
+              <div class="ribbon-layer h-full w-11 satin-ribbon-band z-20" style="${ribCSS}"></div>
+              <div class="ribbon-layer absolute z-30 mt-3">${bowSVG}</div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function attachDemoEnvelopeAnimation(el) {
+      if (!el) return;
+      el.onclick = ev => {
+        triggerCanvaSparkles(ev);
+        el.classList.add('stage-untie');
+        setTimeout(() => el.classList.add('stage-flap-open'), 280);
+        setTimeout(() => el.classList.add('stage-letter-pop'), 620);
+        setTimeout(() => {
+          el.classList.remove('stage-untie', 'stage-flap-open', 'stage-letter-pop');
+        }, 2600);
+      };
+    }
+
+    function renderFoldedLetterVisual() {
+      const stage = document.getElementById('folded-preview-stage');
+      if (!stage) return;
+      stage.innerHTML = buildInteractiveSealedEnvelopeHTML(appState.letter, 'studio-env-demo');
+      attachDemoEnvelopeAnimation(document.getElementById('studio-env-demo'));
+    }
+
+    /* ============================================================================
+       9. BOUQUET ATELIER ENGINE (32 PHOTOREALISTIC BLOOMS + 12 WRAPS)
+       ============================================================================ */
+    function switchBouquetTool(tool) {
+      ['flowers', 'wrap', 'note'].forEach(t => {
+        document.getElementById(`btool-panel-${t}`).classList.add('hidden');
+        document.getElementById(`btool-btn-${t}`).className = 'py-2 rounded-lg text-ink/70';
+      });
+      document.getElementById(`btool-panel-${tool}`).classList.remove('hidden');
+      document.getElementById(`btool-btn-${tool}`).className = 'py-2 rounded-lg bg-white text-emeralddeep shadow-xs';
+    }
+
+    function renderFlowerCatalog() {
+      const grid = document.getElementById('flower-catalog-grid');
+      grid.innerHTML = '';
+      FLOWERS_32.forEach(fl => {
+        const btn = document.createElement('button');
+        btn.className = 'p-2 rounded-2xl bg-ivory hover:bg-emerald-50 border border-botanical/20 flex flex-col items-center transition transform hover:scale-105';
+        btn.innerHTML = `
+          <div class="h-14 flex items-center justify-center">${getPhotorealisticFlowerSVG(fl, 38)}</div>
+          <span class="text-[10px] font-semibold text-ink/85 mt-1 text-center leading-tight">${fl.name}</span>
+        `;
+        btn.onclick = ev => addFlowerToBouquet(fl.id, ev);
+        grid.appendChild(btn);
+      });
+    }
+
+    function addFlowerToBouquet(flowerId, ev) {
+      const newId = 'stem-' + Date.now() + Math.random().toString(36).slice(2, 5);
+      appState.bouquet.stems.push({
+        id: newId,
+        flowerId
+      });
+      if (ev) triggerCanvaSparkles(ev, ['🌸', '🌿', '✨']);
+      renderBouquetCanvas();
+      saveDraft();
+    }
+
+    function removeOneFlowerType(flowerId) {
+      for (let i = appState.bouquet.stems.length - 1; i >= 0; i--) {
+        if (appState.bouquet.stems[i].flowerId === flowerId) {
+          appState.bouquet.stems.splice(i, 1);
+          break;
+        }
+      }
+      renderBouquetCanvas();
+      saveDraft();
+    }
+
+    function shuffleBouquetArrangement(ev) {
+      if (!appState.bouquet.stems.length) return;
+      bouquetShuffleSeed += 1;
+      if (ev) triggerCanvaSparkles(ev, ['💐', '✨', '🌸']);
+      renderBouquetCanvas();
+      showToast('Refreshed hand-tied florist arrangement!', '💐');
+    }
+
+    function clearBouquetStems() {
+      appState.bouquet.stems = [];
+      bouquetShuffleSeed = 0;
+      renderBouquetCanvas();
+      saveDraft();
+    }
+    function getFloristGreeneryBackdropSVG() {
+      return `
+        <svg viewBox="0 0 340 240" class="w-[330px] h-[230px] overflow-visible pointer-events-none drop-shadow-sm">
+          <defs>
+            <linearGradient id="euc-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#6EE7B7"/>
+              <stop offset="55%" stop-color="#10B981"/>
+              <stop offset="100%" stop-color="#065F46"/>
+            </linearGradient>
+            <linearGradient id="fern-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#4ADE80"/>
+              <stop offset="100%" stop-color="#14532D"/>
+            </linearGradient>
+          </defs>
+          <!-- Left & Right Fanning Fern & Ruscus Fronds -->
+          <g transform="translate(65, 130) rotate(-38)">
+            <path d="M0 70 Q-4 20 0 -55" stroke="#14532D" stroke-width="2.5" fill="none"/>
+            <path d="M0 -45 Q-18 -52 -24 -42 Q-12 -36 0 -38 Z" fill="url(#fern-grad)"/>
+            <path d="M0 -45 Q18 -52 24 -42 Q12 -36 0 -38 Z" fill="url(#fern-grad)"/>
+            <path d="M0 -25 Q-24 -34 -32 -22 Q-16 -14 0 -18 Z" fill="url(#fern-grad)"/>
+            <path d="M0 -25 Q24 -34 32 -22 Q16 -14 0 -18 Z" fill="url(#fern-grad)"/>
+            <path d="M0 -4 Q-26 -14 -34 -2 Q-18 8 0 3 Z" fill="url(#fern-grad)"/>
+            <path d="M0 -4 Q26 -14 34 -2 Q18 8 0 3 Z" fill="url(#fern-grad)"/>
+            <path d="M0 18 Q-22 10 -28 20 Q-14 28 0 24 Z" fill="url(#fern-grad)"/>
+            <path d="M0 18 Q22 10 28 20 Q14 28 0 24 Z" fill="url(#fern-grad)"/>
+          </g>
+          <g transform="translate(275, 130) rotate(38)">
+            <path d="M0 70 Q4 20 0 -55" stroke="#14532D" stroke-width="2.5" fill="none"/>
+            <path d="M0 -45 Q-18 -52 -24 -42 Q-12 -36 0 -38 Z" fill="url(#fern-grad)"/>
+            <path d="M0 -45 Q18 -52 24 -42 Q12 -36 0 -38 Z" fill="url(#fern-grad)"/>
+            <path d="M0 -25 Q-24 -34 -32 -22 Q-16 -14 0 -18 Z" fill="url(#fern-grad)"/>
+            <path d="M0 -25 Q24 -34 32 -22 Q16 -14 0 -18 Z" fill="url(#fern-grad)"/>
+            <path d="M0 -4 Q-26 -14 -34 -2 Q-18 8 0 3 Z" fill="url(#fern-grad)"/>
+            <path d="M0 -4 Q26 -14 34 -2 Q18 8 0 3 Z" fill="url(#fern-grad)"/>
+            <path d="M0 18 Q-22 10 -28 20 Q-14 28 0 24 Z" fill="url(#fern-grad)"/>
+            <path d="M0 18 Q22 10 28 20 Q14 28 0 24 Z" fill="url(#fern-grad)"/>
+          </g>
+          <!-- Center & Upper Silver-Dollar Eucalyptus Leaves -->
+          <g transform="translate(120, 95) rotate(-18)">
+            <line x1="0" y1="80" x2="0" y2="-45" stroke="#065F46" stroke-width="2"/>
+            <ellipse cx="-12" cy="-32" rx="11" ry="8" transform="rotate(-20 -12 -32)" fill="url(#euc-grad)"/>
+            <ellipse cx="12" cy="-24" rx="11" ry="8" transform="rotate(20 12 -24)" fill="url(#euc-grad)"/>
+            <ellipse cx="-14" cy="-8" rx="13" ry="9" transform="rotate(-15 -14 -8)" fill="url(#euc-grad)"/>
+            <ellipse cx="14" cy="0" rx="13" ry="9" transform="rotate(15 14 0)" fill="url(#euc-grad)"/>
+            <ellipse cx="-12" cy="18" rx="12" ry="8.5" fill="url(#euc-grad)"/>
+            <ellipse cx="12" cy="24" rx="12" ry="8.5" fill="url(#euc-grad)"/>
+          </g>
+          <g transform="translate(220, 95) rotate(18)">
+            <line x1="0" y1="80" x2="0" y2="-45" stroke="#065F46" stroke-width="2"/>
+            <ellipse cx="-12" cy="-24" rx="11" ry="8" transform="rotate(-20 -12 -24)" fill="url(#euc-grad)"/>
+            <ellipse cx="12" cy="-32" rx="11" ry="8" transform="rotate(20 12 -32)" fill="url(#euc-grad)"/>
+            <ellipse cx="-14" cy="0" rx="13" ry="9" transform="rotate(-15 -14 0)" fill="url(#euc-grad)"/>
+            <ellipse cx="14" cy="-8" rx="13" ry="9" transform="rotate(15 14 -8)" fill="url(#euc-grad)"/>
+            <ellipse cx="-12" cy="24" rx="12" ry="8.5" fill="url(#euc-grad)"/>
+            <ellipse cx="12" cy="18" rx="12" ry="8.5" fill="url(#euc-grad)"/>
+          </g>
+          <!-- Delicate Baby's Breath Filler Sprigs -->
+          <g fill="#FFFFFF" stroke="#E2E8F0" stroke-width="0.6">
+            <circle cx="88" cy="82" r="3.5"/><circle cx="96" cy="76" r="3"/><circle cx="82" cy="91" r="3"/>
+            <circle cx="252" cy="82" r="3.5"/><circle cx="244" cy="76" r="3"/><circle cx="258" cy="91" r="3"/>
+            <circle cx="170" cy="54" r="3.5"/><circle cx="161" cy="60" r="3"/><circle cx="179" cy="60" r="3"/>
+            <circle cx="105" cy="145" r="3.5"/><circle cx="235" cy="145" r="3.5"/>
+          </g>
+        </svg>
+      `;
+    }
+
+    function computeAutoDomeLayout(stems, seed = 0) {
+      const n = stems.length;
+      if (n === 0) return [];
+
+      // Deterministic pseudo-random helper for organic florist variation
+      const jitter = (idx, salt) => {
+        const v = Math.sin((idx + 1) * 12.9898 + (seed + 1) * 78.233 + salt * 43.12) * 43758.5453;
+        return (v - Math.floor(v)) - 0.5;
+      };
+
+      const ordered = stems.map((s, idx) => ({
+        stem: s,
+        origIdx: idx,
+        sortKey: (idx + seed * 3) % n
+      }));
+      if (seed > 0) {
+        ordered.sort((a, b) => a.sortKey - b.sortKey);
+      }
+
+      // Build tightly packed, rounded florist dome tiers nestled inside the wrap opening
+      const tiers = [];
+      if (n === 1) {
+        tiers.push([ordered[0]]);
+      } else if (n <= 3) {
+        tiers.push(ordered);
+      } else if (n <= 7) {
+        const backCount = Math.ceil(n * 0.45);
+        tiers.push(ordered.slice(0, backCount));
+        tiers.push(ordered.slice(backCount));
+      } else {
+        let cursor = 0;
+        let rowIdx = 0;
+        while (cursor < n) {
+          const remaining = n - cursor;
+          const rowCap = Math.min(remaining, 3 + rowIdx);
+          tiers.push(ordered.slice(cursor, cursor + rowCap));
+          cursor += rowCap;
+          rowIdx++;
+        }
+      }
+
+      const totalTiers = tiers.length;
+      const placed = [];
+
+      tiers.forEach((row, tIdx) => {
+        const count = row.length;
+        // tNorm: 0 (upper back arch inside wrap) -> 1 (lower front rim tucked behind front collar)
+        const tNorm = totalTiers === 1 ? 0.5 : tIdx / (totalTiers - 1);
+        const arcWidth = 78 + Math.sin(tNorm * Math.PI) * 52 + Math.min(count * 6, 26);
+        const baseY = -28 + tNorm * 58;
+        const archLift = 18 + tNorm * 10;
+
+        row.forEach((entry, i) => {
+          const u = count === 1 ? 0 : (i / (count - 1)) * 2 - 1;
+          const jx = jitter(entry.origIdx, 1) * 6;
+          const jy = jitter(entry.origIdx, 2) * 5;
+          const jAng = jitter(entry.origIdx, 3) * 5;
+
+          const x = u * (arcWidth * 0.5) + jx;
+          const y = baseY + (u * u) * archLift + jy;
+          // Angle radiates naturally from the ribbon tie-point at the waist of the cone
+          const angle = u * (22 + tNorm * 8) + jAng;
+          const scale = 0.96 + (1 - Math.abs(u) * 0.22) * 0.14 - (1 - tNorm) * 0.05;
+          const zIndex = 14 + tIdx * 3 + Math.round((1 - Math.abs(u)) * 2);
+
+          placed.push({
+            stem: entry.stem,
+            x,
+            y,
+            angle,
+            scale,
+            zIndex
+          });
+        });
+      });
+
+      return placed;
+    }
+
+    function buildBouquetHTML(bouquetData, interactive = false) {
+      const wrapCSS = getWrapPatternCSS(bouquetData.wrapColor, bouquetData.wrapPattern);
+      const ribCSS = getRibbonPatternCSS(bouquetData.ribbonColor, bouquetData.ribbonPrint);
+      const bowSVG = getRealisticSatinBowSVG(bouquetData.ribbonColor, 96);
+
+      // Tall upper back sheets of the florist wrap that frame behind the flowers
+      let backSheetClip = 'clip-path: polygon(10% 10%, 50% 4%, 90% 10%, 63% 76%, 37% 76%);';
+      if (bouquetData.wrapStyle === 'korean') {
+        backSheetClip = 'clip-path: polygon(5% 15%, 28% 3%, 50% 11%, 72% 3%, 95% 15%, 64% 76%, 36% 76%);';
+      } else if (bouquetData.wrapStyle === 'kraft') {
+        backSheetClip = 'clip-path: polygon(12% 11%, 50% 2%, 88% 11%, 63% 76%, 37% 76%);';
+      } else if (bouquetData.wrapStyle === 'pleated') {
+        backSheetClip = 'clip-path: polygon(3% 20%, 24% 6%, 50% 4%, 76% 6%, 97% 20%, 63% 76%, 37% 76%);';
+      }
+
+      const layout = computeAutoDomeLayout(bouquetData.stems || [], interactive ? bouquetShuffleSeed : 0);
+      const hasStems = layout.length > 0;
+
+      // Render flowers inside a pocket-clipped container so stems disappear cleanly inside the paper cone
+      const stemsHTML = layout
+        .map(item => {
+          const fl = FLOWERS_32.find(f => f.id === item.stem.flowerId) || FLOWERS_32[0];
+          return `
+            <div
+              class="absolute transition-all duration-300 pointer-events-none"
+              style="left: calc(50% + ${item.x.toFixed(1)}px - 44px); top: calc(43% + ${item.y.toFixed(1)}px - 36px); transform: rotate(${item.angle.toFixed(1)}deg) scale(${item.scale.toFixed(2)}); z-index: ${item.zIndex}; filter: drop-shadow(0 5px 6px rgba(24, 14, 16, 0.28));"
+            >
+              ${getPhotorealisticFlowerSVG(fl, 88)}
+            </div>
+          `;
+        })
+        .join('');
+
+      // Exposed natural green stem ends emerging below the waist tie-point
+      const bottomStemBundleHTML = hasStems
+        ? `
+          <svg viewBox="0 0 120 110" class="w-[120px] h-[110px] overflow-visible pointer-events-none">
+            <g stroke-linecap="round">
+              <line x1="56" y1="0" x2="43" y2="92" stroke="#14532D" stroke-width="4.2"/>
+              <line x1="64" y1="0" x2="77" y2="90" stroke="#166534" stroke-width="4.2"/>
+              <line x1="52" y1="0" x2="36" y2="85" stroke="#15803D" stroke-width="3.8"/>
+              <line x1="68" y1="0" x2="84" y2="86" stroke="#14532D" stroke-width="3.8"/>
+              <line x1="59" y1="0" x2="52" y2="96" stroke="#22C55E" stroke-width="4"/>
+              <line x1="61" y1="0" x2="68" y2="95" stroke="#15803D" stroke-width="4"/>
+              <line x1="60" y1="0" x2="60" y2="98" stroke="#166534" stroke-width="4.5"/>
+            </g>
+          </svg>
+        `
+        : '';
+
+      return `
+        <div class="relative w-[345px] h-[455px] flex items-center justify-center">
+          <!-- LAYER 1: Back Outer Wrapping Paper Wings -->
+          <div class="absolute inset-0 shadow-xl transition-all duration-300" style="${wrapCSS} ${backSheetClip} z-index: 2;"></div>
+          <!-- Inner Shadowed Paper Cavity (gives real 3D depth behind the flowers) -->
+          <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 50% 44%, rgba(28,16,18,0.34) 0%, rgba(28,16,18,0.14) 48%, transparent 74%); ${backSheetClip} z-index: 3;"></div>
+
+          <!-- LAYER 2: Crisp White Inner Tissue Paper Lining -->
+          <div class="absolute inset-x-6 top-6 bottom-24 pointer-events-none" style="background: linear-gradient(180deg, #FFFDF9 0%, #F5EFE6 65%, rgba(214,202,188,0.85) 100%); clip-path: polygon(10% 14%, 32% 4%, 50% 11%, 68% 4%, 90% 14%, 63% 88%, 37% 88%); box-shadow: inset 0 -18px 26px rgba(41,29,30,0.18); z-index: 4;"></div>
+
+          <!-- LAYER 3: Clipped Flower Pocket (Stems go INSIDE the paper cone & never poke out the sides!) -->
+          <div
+            class="absolute inset-x-0 top-0 h-[342px] pointer-events-none"
+            style="clip-path: polygon(0% 0%, 100% 0%, 100% 48%, 62% 99%, 38% 99%, 0% 48%); z-index: 10;"
+          >
+            <!-- Lush Greenery Collar Cushion inside the Cone -->
+            ${hasStems ? `<div class="absolute top-[58px] left-1/2 -translate-x-1/2 pointer-events-none" style="z-index: 11;">${getFloristGreeneryBackdropSVG()}</div>` : ''}
+            <!-- Layered Photorealistic Blooms -->
+            ${stemsHTML}
+          </div>
+
+          ${!hasStems ? `<div class="relative z-30 -mt-12 text-xs text-ink/70 bg-white/95 px-4 py-2.5 rounded-full shadow-md border border-botanical/25">Tap flowers on the left to fill your bouquet 🌸</div>` : ''}
+
+          <!-- LAYER 4: Exposed Stem Ends Emerging Below the Tied Waist -->
+          <div class="absolute bottom-[16px] left-1/2 -translate-x-1/2 pointer-events-none" style="z-index: 18;">
+            ${bottomStemBundleHTML}
+          </div>
+
+          <!-- LAYER 5: Front Overlapping Folded Wrapping Paper Collar & Skirt (Covers Lower Stems!) -->
+          <!-- Left Cross-Folded Paper Lapel -->
+          <div
+            class="absolute inset-x-0 top-[154px] h-[218px] pointer-events-none transition-all duration-300"
+            style="${wrapCSS} filter: brightness(0.95); clip-path: polygon(11% 14%, 64% 52%, 57% 98%, 38% 98%); z-index: 24;"
+          ></div>
+          <!-- Right Cross-Folded Paper Lapel with Soft Fold Shadow -->
+          <div
+            class="absolute inset-x-0 top-[154px] h-[218px] pointer-events-none transition-all duration-300"
+            style="${wrapCSS} filter: brightness(0.89); clip-path: polygon(89% 14%, 36% 52%, 43% 98%, 62% 98%); z-index: 25;"
+          ></div>
+          <!-- Realistic Diagonal Crease & Collar Rim Shadow -->
+          <div
+            class="absolute inset-x-0 top-[154px] h-[218px] pointer-events-none"
+            style="background: linear-gradient(125deg, rgba(255,255,255,0.28) 0%, transparent 42%, rgba(0,0,0,0.22) 50%, rgba(0,0,0,0.06) 65%, rgba(255,255,255,0.18) 100%); clip-path: polygon(11% 14%, 50% 39%, 89% 14%, 62% 98%, 38% 98%); z-index: 26;"
+          ></div>
+
+          <!-- LAYER 6: Realistic Satin Ribbon Waistband + Dimensional Bow -->
+          <div
+            class="absolute bottom-[106px] w-[104px] h-7 rounded-full satin-ribbon-band flex items-center justify-center pointer-events-none"
+            style="${ribCSS} z-index: 40;"
+          >
+            <div class="mt-7">${bowSVG}</div>
+          </div>
+
+          <!-- LAYER 7: Hanging Gift Note Card -->
+          ${
+            bouquetData.noteText
+              ? `
+            <div class="absolute bottom-[28px] right-2 bg-[#FFFDF9] border border-marigold/50 rounded-xl px-3.5 py-2 shadow-lg max-w-[178px] rotate-[5deg] hover:scale-105 transition" style="z-index: 50;">
+              <div class="w-2.5 h-2.5 rounded-full bg-coral mx-auto mb-1"></div>
+              <p class="font-script text-base text-ink leading-snug text-center break-words">${escapeHTML(bouquetData.noteText)}</p>
+            </div>
+          `
+              : ''
+          }
+        </div>
+      `;
+    }
+
+    function renderBouquetCanvas() {
+      document.getElementById('stem-count').textContent = appState.bouquet.stems.length;
+      const stage = document.getElementById('bouquet-stage');
+      stage.innerHTML = buildBouquetHTML(appState.bouquet, true);
+
+      // Render compact flower count chips so users can add/remove any bloom effortlessly
+      const chipsWrap = document.getElementById('bouquet-stem-chips');
+      if (!chipsWrap) return;
+
+      const counts = new Map();
+      appState.bouquet.stems.forEach(s => {
+        counts.set(s.flowerId, (counts.get(s.flowerId) || 0) + 1);
+      });
+
+      if (counts.size === 0) {
+        chipsWrap.innerHTML = '';
+        return;
+      }
+
+      chipsWrap.innerHTML = Array.from(counts.entries())
+        .map(([flowerId, qty]) => {
+          const fl = FLOWERS_32.find(f => f.id === flowerId) || FLOWERS_32[0];
+          return `
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white border border-botanical/30 shadow-xs text-[11px] font-medium text-ink">
+              <span class="w-2.5 h-2.5 rounded-full inline-block" style="background:${fl.p2};"></span>
+              <span>${fl.name}</span>
+              <span class="font-bold text-emeralddeep">×${qty}</span>
+              <button onclick="addFlowerToBouquet('${fl.id}')" class="w-4 h-4 rounded-full bg-emerald-100 text-emeralddeep font-bold leading-none hover:bg-emerald-200" title="Add one more">+</button>
+              <button onclick="removeOneFlowerType('${fl.id}')" class="w-4 h-4 rounded-full bg-rose-100 text-coral font-bold leading-none hover:bg-rose-200" title="Remove one">−</button>
+            </div>
+          `;
+        })
+        .join('');
+    }
+
+    function setBouquetWrapStyle(style) {
+      appState.bouquet.wrapStyle = style;
+      renderBouquetCanvas();
+      saveDraft();
+    }
+
+    function setBouquetWrapColor(hex) {
+      appState.bouquet.wrapColor = hex;
+      renderBouquetCanvas();
+      saveDraft();
+    }
+
+    function setBouquetWrapPattern(pat) {
+      appState.bouquet.wrapPattern = pat;
+      renderBouquetCanvas();
+      saveDraft();
+    }
+
+    function setBouquetRibbonColor(hex) {
+      appState.bouquet.ribbonColor = hex;
+      renderBouquetCanvas();
+      saveDraft();
+    }
+
+    function setBouquetRibbonPrint(print) {
+      appState.bouquet.ribbonPrint = print;
+      renderBouquetCanvas();
+      saveDraft();
+    }
+
+    function applyNoteTemplate(prefix) {
+      const input = document.getElementById('bouquet-note-input');
+      input.value = prefix;
+      input.focus();
+      updateBouquetNote(prefix);
+    }
+
+    function updateBouquetNote(text) {
+      appState.bouquet.noteText = text;
+      renderBouquetCanvas();
+      saveDraft();
+    }
+
+    function getWrapPatternCSS(color, pattern) {
+      if (pattern === 'balls') {
+        return `background-color: ${color}; background-image: radial-gradient(rgba(41,29,30,0.2) 2.5px, transparent 3px); background-size: 18px 18px;`;
+      }
+      if (pattern === 'stripes') {
+        return `background-color: ${color}; background-image: repeating-linear-gradient(90deg, rgba(41,29,30,0.12) 0 2px, transparent 2px 14px);`;
+      }
+      if (pattern === 'leaves') {
+        return `background-color: ${color}; background-image: radial-gradient(ellipse at center, rgba(16,185,129,0.28) 3px, transparent 3.5px); background-size: 22px 18px;`;
+      }
+      if (pattern === 'hearts') {
+        return `background-color: ${color}; background-image: radial-gradient(circle at 7px 7px, rgba(225,29,72,0.26) 2.5px, transparent 3px), radial-gradient(circle at 11px 7px, rgba(225,29,72,0.26) 2.5px, transparent 3px); background-size: 22px 22px;`;
+      }
+      if (pattern === 'kraft') {
+        return `background-color: ${color}; background-image: repeating-linear-gradient(45deg, rgba(120,72,32,0.08) 0 2px, transparent 2px 6px);`;
+      }
+      if (pattern === 'linen') {
+        return `background-color: ${color}; background-image: linear-gradient(90deg, rgba(41,29,30,0.07) 1px, transparent 1px), linear-gradient(rgba(41,29,30,0.07) 1px, transparent 1px); background-size: 8px 8px;`;
+      }
+      if (pattern === 'gold') {
+        return `background-color: ${color}; background-image: radial-gradient(rgba(245,158,11,0.55) 2.2px, transparent 2.8px); background-size: 26px 26px;`;
+      }
+      if (pattern === 'stars') {
+        return `background-color: ${color}; background-image: radial-gradient(rgba(245,158,11,0.55) 2px, transparent 2.5px); background-size: 20px 20px;`;
+      }
+      if (pattern === 'gingham') {
+        return `background-color: ${color}; background-image: linear-gradient(90deg, rgba(244,63,94,0.12) 50%, transparent 50%), linear-gradient(rgba(244,63,94,0.12) 50%, transparent 50%); background-size: 22px 22px;`;
+      }
+      if (pattern === 'terrazzo') {
+        return `background-color: ${color}; background-image: radial-gradient(#F43F5E 2px, transparent 2.5px), radial-gradient(#10B981 2px, transparent 2.5px), radial-gradient(#F59E0B 2px, transparent 2.5px); background-size: 26px 26px; background-position: 0 0, 9px 13px, 18px 6px;`;
+      }
+      if (pattern === 'newsprint') {
+        return `background-color: ${color}; background-image: repeating-linear-gradient(0deg, rgba(41,29,30,0.14) 0 1px, transparent 1px 7px);`;
+      }
+      return `background-color: ${color};`;
+    }
+
+    /* ============================================================================
+       10. SELF-CONTAINED UTF-8 SAFE BASE64 LINK ENCODER + OFFLINE HTML EXPORT
+       ============================================================================ */
+    function compactPayloadForLink(state) {
+      const c = {
+        m: state.creationMode,
+        l: state.hasLetter ? 1 : 0,
+        b: state.hasBouquet ? 1 : 0
+      };
+      if (state.passcode) c.p = state.passcode;
+      if (state.hasLetter && state.letter) {
+        c.lt = {
+          f: state.letter.foldType,
+          es: state.letter.envelopeStyle,
+          rc: state.letter.ribbonColor,
+          rp: state.letter.ribbonPrint,
+          pg: state.letter.pages.map(p => ({
+            bg: p.bgColor,
+            tx: p.texture,
+            tb: p.textBlocks.map(t => ({
+              t: t.text,
+              x: Math.round(t.x),
+              y: Math.round(t.y),
+              w: Math.round(t.width || 420),
+              h: Math.round(t.height || 140),
+              ff: t.fontFamily,
+              fs: t.fontSize,
+              c: t.color,
+              a: t.textAlign
+            })),
+            el: p.elements
+              .filter(el => el.kind !== 'video')
+              .map(el => ({
+                k: el.kind,
+                em: el.emoji,
+                bd: el.badge,
+                s: el.src,
+                x: Math.round(el.x),
+                y: Math.round(el.y),
+                w: Math.round(el.width || 80),
+                h: Math.round(el.height || 80),
+                r: el.rotate || 0
+              }))
+          }))
+        };
+      }
+      if (state.hasBouquet && state.bouquet) {
+        c.bq = {
+          ws: state.bouquet.wrapStyle,
+          wc: state.bouquet.wrapColor,
+          wp: state.bouquet.wrapPattern,
+          rc: state.bouquet.ribbonColor,
+          rp: state.bouquet.ribbonPrint,
+          nt: state.bouquet.noteText,
+          st: state.bouquet.stems.map(s => s.flowerId)
+        };
+      }
+      return c;
+    }
+
+    function expandPayloadFromLink(obj) {
+      if (!obj || typeof obj !== 'object') return null;
+      if (obj.letter || obj.bouquet) return obj;
+      const expanded = JSON.parse(JSON.stringify(defaultState));
+      expanded.creationMode = obj.m || 'both';
+      expanded.hasLetter = !!obj.l;
+      expanded.hasBouquet = !!obj.b;
+      expanded.passcode = obj.p || '';
+      if (obj.lt) {
+        expanded.letter.foldType = obj.lt.f || 'square';
+        expanded.letter.envelopeStyle = obj.lt.es || expanded.letter.envelopeStyle;
+        expanded.letter.ribbonColor = obj.lt.rc || '#E11D48';
+        expanded.letter.ribbonPrint = obj.lt.rp || 'balls';
+        expanded.letter.pages = (obj.lt.pg || []).map((p, idx) => ({
+          id: 'page-' + idx,
+          bgColor: p.bg || '#FFFDF9',
+          texture: p.tx || 'none',
+          textBlocks: (p.tb || []).map((t, ti) => ({
+            id: 'tb-' + ti,
+            text: t.t || '',
+            x: t.x ?? 42,
+            y: t.y ?? 44,
+            width: t.w ?? 420,
+            height: t.h ?? 140,
+            fontFamily: t.ff || "'Dancing Script', cursive",
+            fontSize: t.fs || '26px',
+            color: t.c || '#291D1E',
+            textAlign: t.a || 'left'
+          })),
+          elements: (p.el || []).map((el, ei) => ({
+            id: 'el-' + ei,
+            kind: el.k,
+            emoji: el.em,
+            badge: el.bd,
+            src: el.s,
+            x: el.x ?? 120,
+            y: el.y ?? 140,
+            width: el.w ?? 80,
+            height: el.h ?? 80,
+            rotate: el.r || 0
+          }))
+        }));
+      }
+      if (obj.bq) {
+        expanded.bouquet.wrapStyle = obj.bq.ws || 'korean';
+        expanded.bouquet.wrapColor = obj.bq.wc || '#F7E9D7';
+        expanded.bouquet.wrapPattern = obj.bq.wp || 'balls';
+        expanded.bouquet.ribbonColor = obj.bq.rc || '#E11D48';
+        expanded.bouquet.ribbonPrint = obj.bq.rp || 'balls';
+        expanded.bouquet.noteText = obj.bq.nt || '';
+        expanded.bouquet.stems = (obj.bq.st || []).map((fid, si) => ({
+          id: 'stem-' + si,
+          flowerId: fid
+        }));
+      }
+      return expanded;
+    }
+
+    function bytesToUrlSafeBase64(bytes) {
+      let bin = '';
+      for (let i = 0; i < bytes.length; i++) {
+        bin += String.fromCharCode(bytes[i]);
+      }
+      return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
+    function urlSafeBase64ToBytes(encoded) {
+      let b64 = encoded.replace(/-/g, '+').replace(/_/g, '/');
+      while (b64.length % 4) b64 += '=';
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) {
+        bytes[i] = bin.charCodeAt(i);
+      }
+      return bytes;
+    }
+
+    async function encodeGiftPayload(obj) {
+      const compacted = compactPayloadForLink(obj);
+      const json = JSON.stringify(compacted);
+      const rawBytes = new TextEncoder().encode(json);
+      if (typeof CompressionStream !== 'undefined') {
+        try {
+          const cs = new CompressionStream('deflate-raw');
+          const writer = cs.writable.getWriter();
+          writer.write(rawBytes);
+          writer.close();
+          const compressedBuf = await new Response(cs.readable).arrayBuffer();
+          return 'z' + bytesToUrlSafeBase64(new Uint8Array(compressedBuf));
+        } catch (e) {}
+      }
+      return bytesToUrlSafeBase64(rawBytes);
+    }
+
+    async function decodeGiftPayload(encoded) {
+      try {
+        const clean = (encoded || '').replace(/\s+/g, '');
+        if (!clean) return null;
+        if (clean.startsWith('z') && typeof DecompressionStream !== 'undefined') {
+          const compBytes = urlSafeBase64ToBytes(clean.slice(1));
+          const ds = new DecompressionStream('deflate-raw');
+          const writer = ds.writable.getWriter();
+          writer.write(compBytes);
+          writer.close();
+          const rawBuf = await new Response(ds.readable).arrayBuffer();
+          const json = new TextDecoder().decode(rawBuf);
+          return expandPayloadFromLink(JSON.parse(json));
+        }
+        const bytes = urlSafeBase64ToBytes(clean);
+        const json = new TextDecoder().decode(bytes);
+        return expandPayloadFromLink(JSON.parse(json));
+      } catch (e) {
+        return null;
+      }
+    }
+
+    async function openSharePreview(ev) {
+      if (ev) triggerCanvaSparkles(ev);
+      if (!appState.hasLetter && !appState.hasBouquet) {
+        appState.hasLetter = true;
+      }
+
+      ['home', 'letter', 'bouquet', 'recipient'].forEach(v => {
+        document.getElementById(`view-${v}`).classList.add('hidden');
+      });
+      document.getElementById('view-share').classList.remove('hidden');
+
+      const bqCol = document.getElementById('share-bouquet-preview-col');
+      const ltCol = document.getElementById('share-letter-preview-col');
+
+      bqCol.classList.toggle('hidden', !appState.hasBouquet);
+      ltCol.classList.toggle('hidden', !appState.hasLetter);
+
+      if (appState.hasBouquet && !appState.hasLetter) {
+        bqCol.className = 'lg:col-span-12 flex flex-col items-center justify-center canva-pop-in';
+      } else if (!appState.hasBouquet && appState.hasLetter) {
+        ltCol.className = 'lg:col-span-12 flex flex-col items-center justify-center space-y-3 canva-pop-in';
+      } else {
+        bqCol.className = 'lg:col-span-6 flex flex-col items-center justify-center canva-pop-in';
+        ltCol.className = 'lg:col-span-6 flex flex-col items-center justify-center space-y-3 canva-pop-in';
+      }
+
+      if (appState.hasBouquet) {
+        document.getElementById('share-bouquet-render').innerHTML = buildBouquetHTML(appState.bouquet, false);
+      }
+      if (appState.hasLetter) {
+        document.getElementById('share-envelope-render').innerHTML = buildInteractiveSealedEnvelopeHTML(appState.letter, 'share-env-demo');
+        attachDemoEnvelopeAnimation(document.getElementById('share-env-demo'));
+        document.getElementById('share-letter-meta').textContent =
+          `${appState.letter.pages.length}-Page ${appState.letter.foldType === 'square' ? 'Envelope' : 'Scroll'} Letter`;
+      }
+
+      await regenerateShareLink();
+    }
+
+    async function regenerateShareLink() {
+      const urlInput = document.getElementById('generated-share-url');
+      urlInput.value = 'Generating private link...';
+      appState.passcode = document.getElementById('gift-passcode-input').value.trim();
+      const cleanPayload = JSON.parse(JSON.stringify(appState));
+      cleanPayload.letter.pages.forEach(p => {
+        p.elements = p.elements.filter(el => el.kind !== 'video');
+      });
+
+      let token = await encodeGiftPayload(cleanPayload);
+      const baseUrl = window.location.href.split('#')[0].split('?')[0];
+
+      if (baseUrl.startsWith('about:') || baseUrl.startsWith('blob:')) {
+        urlInput.value = `https://zarinsubahprapty.github.io/Petal-and-Parchment/#gift=${token}`;
+      } else {
+        urlInput.value = `${baseUrl}#gift=${token}`;
+      }
+    }
+
+    async function copyShareLink(ev) {
+      triggerCanvaSparkles(ev);
+      const input = document.getElementById('generated-share-url');
+      if (!input.value || input.value.startsWith('Generating')) {
+        await regenerateShareLink();
+      }
+      const val = input.value;
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(val).catch(() => {});
+      }
+      input.select();
+      input.setSelectionRange(0, 999999);
+      document.execCommand('copy');
+      showToast('Private keepsake link copied!', '💌');
+    }
+
+    function downloadStandaloneGiftHTML(ev) {
+      if (ev) triggerCanvaSparkles(ev);
+      const cleanPayload = JSON.parse(JSON.stringify(appState));
+      cleanPayload.letter.pages.forEach(p => {
+        p.elements = p.elements.filter(el => el.kind !== 'video');
+      });
+      const encodedJson = JSON.stringify(cleanPayload).replace(/<\/script>/gi, '<\\/script>');
+      const docHtml = '<!DOCTYPE html>\n' + document.documentElement.outerHTML.replace(
+        'let recipientGiftData = null;',
+        `let recipientGiftData = ${encodedJson};`
+      ).replace(
+        'if (await checkIncomingGiftLink()) return;',
+        'if (recipientGiftData) { launchRecipientExperience(false); return; }\n      if (await checkIncomingGiftLink()) return;'
+      );
+      const blob = new Blob([docHtml], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'petal-and-parchment-keepsake.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showToast('Offline keepsake HTML downloaded!', '💾');
+    }
+
+    function launchRecipientExperience(isPreviewMode = false, ev = null) {
+      if (ev) triggerCanvaSparkles(ev);
+      if (isPreviewMode) {
+        recipientGiftData = JSON.parse(JSON.stringify(appState));
+        if (!recipientGiftData.hasLetter && !recipientGiftData.hasBouquet) {
+          recipientGiftData.hasLetter = true;
+        }
+      }
+      if (!recipientGiftData) return;
+
+      ['home', 'letter', 'bouquet', 'share'].forEach(v => {
+        document.getElementById(`view-${v}`).classList.add('hidden');
+      });
+      document.getElementById('view-recipient').classList.remove('hidden');
+
+      const backBtn = document.getElementById('btn-back-to-editor');
+      backBtn.classList.toggle('hidden', !isPreviewMode);
+
+      const gate = document.getElementById('recipient-passcode-gate');
+      const showcase = document.getElementById('recipient-main-showcase');
+
+      if (!isPreviewMode && recipientGiftData.passcode) {
+        gate.classList.remove('hidden');
+        showcase.classList.add('hidden');
+        document.getElementById('passcode-error-msg').classList.add('hidden');
+        document.getElementById('recipient-passcode-attempt').value = '';
+      } else {
+        gate.classList.add('hidden');
+        showcase.classList.remove('hidden');
+        setupUnifiedRecipientStage();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function unlockRecipientGift(ev) {
+      const attempt = document.getElementById('recipient-passcode-attempt').value.trim();
+      if (attempt === recipientGiftData.passcode) {
+        triggerCanvaSparkles(ev);
+        document.getElementById('recipient-passcode-gate').classList.add('hidden');
+        document.getElementById('recipient-main-showcase').classList.remove('hidden');
+        setupUnifiedRecipientStage();
+      } else {
+        document.getElementById('passcode-error-msg').classList.remove('hidden');
+      }
+    }
+
+    function setupUnifiedRecipientStage() {
+      const bouquetCol = document.getElementById('recipient-bouquet-col');
+      const letterCol = document.getElementById('recipient-letter-col');
+
+      bouquetCol.classList.toggle('hidden', !recipientGiftData.hasBouquet);
+      letterCol.classList.toggle('hidden', !recipientGiftData.hasLetter);
+
+      if (recipientGiftData.hasBouquet && !recipientGiftData.hasLetter) {
+        bouquetCol.className = 'lg:col-span-12 flex flex-col items-center justify-center bg-gradient-to-b from-ivory to-blush/25 rounded-3xl p-8 border border-botanical/20 max-w-lg mx-auto canva-pop-in';
+      } else if (!recipientGiftData.hasBouquet && recipientGiftData.hasLetter) {
+        letterCol.className = 'lg:col-span-12 flex flex-col items-center justify-center min-h-[480px] canva-pop-in';
+      } else {
+        bouquetCol.className = 'lg:col-span-5 flex flex-col items-center justify-center bg-gradient-to-b from-ivory to-blush/25 rounded-3xl p-5 border border-botanical/20 shadow-inner canva-pop-in';
+        letterCol.className = 'lg:col-span-7 flex flex-col items-center justify-center min-h-[480px] canva-pop-in';
+      }
+
+      if (recipientGiftData.hasBouquet) {
+        document.getElementById('recipient-bouquet-display').innerHTML = buildBouquetHTML(recipientGiftData.bouquet, false);
+      }
+
+      if (recipientGiftData.hasLetter) {
+        document.getElementById('recipient-envelope-stage').classList.remove('hidden');
+        document.getElementById('recipient-unfolded-reader').classList.add('hidden');
+        document.getElementById('recipient-interactive-envelope').innerHTML =
+          buildInteractiveSealedEnvelopeHTML(recipientGiftData.letter, 'rec-sealed-env');
+      }
+    }
+
+    function triggerEnvelopeOpenSequence(ev) {
+      const env = document.getElementById('rec-sealed-env');
+      if (!env || env.dataset.opening === '1') return;
+      env.dataset.opening = '1';
+      triggerCanvaSparkles(ev);
+
+      env.classList.add('stage-untie');
+      setTimeout(() => env.classList.add('stage-flap-open'), 300);
+      setTimeout(() => env.classList.add('stage-letter-pop'), 680);
+      setTimeout(() => {
+        document.getElementById('recipient-envelope-stage').classList.add('hidden');
+        const reader = document.getElementById('recipient-unfolded-reader');
+        reader.classList.remove('hidden');
+        reader.classList.remove('animate-unfold-sheet');
+        void reader.offsetWidth;
+        reader.classList.add('animate-unfold-sheet');
+        recipientPageIndex = 0;
+        renderRecipientLetterPage();
+      }, 1400);
+    }
+
+    function refoldEnvelopeView() {
+      document.getElementById('recipient-unfolded-reader').classList.add('hidden');
+      document.getElementById('recipient-envelope-stage').classList.remove('hidden');
+      document.getElementById('recipient-interactive-envelope').innerHTML =
+        buildInteractiveSealedEnvelopeHTML(recipientGiftData.letter, 'rec-sealed-env');
+    }
+
+    function turnRecipientPage(delta) {
+      const next = recipientPageIndex + delta;
+      if (next < 0 || next >= recipientGiftData.letter.pages.length) return;
+      recipientPageIndex = next;
+      const sheet = document.getElementById('recipient-letter-sheet');
+      sheet.classList.remove('book-leaf-turn-next', 'book-leaf-turn-prev');
+      void sheet.offsetWidth;
+      sheet.classList.add(delta > 0 ? 'book-leaf-turn-next' : 'book-leaf-turn-prev');
+      renderRecipientLetterPage();
+    }
+
+    function renderRecipientLetterPage() {
+      const pages = recipientGiftData.letter.pages;
+      const page = pages[recipientPageIndex];
+      const sheet = document.getElementById('recipient-letter-sheet');
+
+      document.getElementById('rec-page-indicator').textContent = `Page ${recipientPageIndex + 1} of ${pages.length}`;
+      document.getElementById('rec-prev-page').disabled = recipientPageIndex === 0;
+      document.getElementById('rec-next-page').disabled = recipientPageIndex === pages.length - 1;
+
+      sheet.style.setProperty('--paper-bg', page.bgColor);
+      sheet.className = `paper-sheet w-full max-w-2xl min-h-[540px] rounded-2xl p-6 sm:p-10 relative overflow-hidden border border-coral/20 ${page.texture !== 'none' ? 'texture-' + page.texture : ''}`;
+      sheet.innerHTML = '';
+
+      page.textBlocks.forEach(tb => {
+        const div = document.createElement('div');
+        div.className = 'absolute whitespace-pre-wrap break-words z-10';
+        div.style.left = `${tb.x}px`;
+        div.style.top = `${tb.y}px`;
+        div.style.width = `${tb.width || 420}px`;
+        div.style.fontFamily = tb.fontFamily;
+        div.style.fontSize = tb.fontSize;
+        div.style.color = tb.color;
+        div.style.textAlign = tb.textAlign;
+        div.style.lineHeight = '1.5';
+        div.innerText = tb.text;
+        sheet.appendChild(div);
+      });
+
+      page.elements.forEach(el => {
+        const w = el.width || (el.kind === 'sticker' ? 80 : 170);
+        const h = el.height || (el.kind === 'sticker' ? 80 : 160);
+        const item = document.createElement('div');
+        item.className = 'absolute z-20';
+        item.style.left = `${el.x}px`;
+        item.style.top = `${el.y}px`;
+        item.style.width = `${w}px`;
+        item.style.height = `${h}px`;
+        item.style.transform = `rotate(${el.rotate || 0}deg)`;
+
+        if (el.kind === 'sticker') {
+          const fontPx = Math.min(w, h) * 0.68;
+          item.innerHTML = `
+            <div class="w-full h-full flex flex-col items-center justify-center p-1">
+              <span style="font-size: ${fontPx}px; line-height: 1;">${el.emoji}</span>
+              ${el.badge ? `<span class="mt-1 px-2 py-0.5 rounded-full bg-white/95 border border-coral/35 text-[10px] font-bold text-coral">${el.badge}</span>` : ''}
+            </div>
+          `;
+        } else if (el.kind === 'image') {
+          item.className += ' cursor-pointer hover:scale-105 transition';
+          item.innerHTML = `
+            <div class="w-full h-full bg-white p-2 pb-6 rounded-xl shadow-md border border-ink/10 flex flex-col">
+              <img src="${el.src}" class="w-full flex-1 object-cover rounded-lg min-h-0" alt="Memory" />
+              <div class="text-[10px] text-center text-ink/60 mt-1 font-script shrink-0">Tap to view</div>
+            </div>
+          `;
+          item.onclick = () => openLightbox('image', el.src);
+        } else if (el.kind === 'video') {
+          item.className += ' cursor-pointer hover:scale-105 transition';
+          item.innerHTML = `
+            <div class="w-full h-full bg-white p-2 pb-6 rounded-xl shadow-md border border-ink/10 flex flex-col relative">
+              <video src="${el.src}" class="w-full flex-1 object-cover rounded-lg bg-black min-h-0" muted></video>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="w-9 h-9 rounded-full bg-coral text-white flex items-center justify-center text-xs shadow">▶</span>
+              </div>
+              <div class="text-[10px] text-center text-ink/60 mt-1 font-script shrink-0">Tap to play</div>
+            </div>
+          `;
+          item.onclick = () => openLightbox('video', el.src);
+        }
+        sheet.appendChild(item);
+      });
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+    }
+  </script>
+</body>
+</html>
