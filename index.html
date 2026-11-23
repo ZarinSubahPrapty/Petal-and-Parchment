@@ -285,6 +285,15 @@
       box-shadow: 0 22px 46px rgba(41, 29, 30, 0.2), 0 4px 14px rgba(244, 63, 94, 0.14);
       transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
     }
+    @media (max-width: 400px) {
+      .envelope-body {
+        width: 280px;
+        height: 186px;
+      }
+      .envelope-top-flap {
+        height: 106px;
+      }
+    }
     .envelope-wrapper-3d:hover .envelope-body {
       transform: translateY(-5px) scale(1.02);
       box-shadow: 0 28px 56px rgba(244, 63, 94, 0.24);
@@ -398,6 +407,31 @@
     ::-webkit-scrollbar-track { background: #FFF1F2; border-radius: 999px; }
     ::-webkit-scrollbar-thumb { background: #FDA4AF; border-radius: 999px; }
     ::-webkit-scrollbar-thumb:hover { background: #F43F5E; }
+
+    /* Responsive Mobile Canvas Scaling (Keeps PC View Identical) */
+    .mobile-sheet-scaler {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    @media (max-width: 680px) {
+      .mobile-sheet-scaler .paper-sheet {
+        width: 640px !important;
+        min-width: 640px !important;
+        max-width: 640px !important;
+        transform-origin: top center;
+      }
+      .bouquet-scale-wrap {
+        transform: scale(0.84);
+        transform-origin: center center;
+      }
+    }
+    @media (max-width: 390px) {
+      .bouquet-scale-wrap {
+        transform: scale(0.75);
+        transform-origin: center center;
+      }
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-coral selection:text-white">
@@ -744,7 +778,9 @@
           </div>
 
           <div class="book-stage w-full flex justify-center">
-            <div id="letter-canvas" class="paper-sheet w-full max-w-2xl min-h-[560px] sm:min-h-[630px] rounded-2xl p-6 sm:p-10 relative overflow-hidden border border-coral/20"></div>
+            <div id="letter-canvas-scaler" class="mobile-sheet-scaler">
+              <div id="letter-canvas" class="paper-sheet w-full max-w-2xl min-h-[560px] sm:min-h-[630px] rounded-2xl p-6 sm:p-10 relative overflow-hidden border border-coral/20"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -1057,7 +1093,9 @@
               </div>
 
               <div class="book-stage w-full flex justify-center">
-                <div id="recipient-letter-sheet" class="paper-sheet w-full max-w-2xl min-h-[540px] rounded-2xl p-6 sm:p-10 relative overflow-hidden border border-coral/20"></div>
+                <div id="recipient-sheet-scaler" class="mobile-sheet-scaler">
+                  <div id="recipient-letter-sheet" class="paper-sheet w-full max-w-2xl min-h-[540px] rounded-2xl p-6 sm:p-10 relative overflow-hidden border border-coral/20"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -2394,7 +2432,7 @@
         const paperColor = firstPage.bgColor || '#FFFDF9';
         return `
           <div id="${containerId}" class="envelope-wrapper-3d select-none">
-            <div class="relative w-[320px] h-[94px] rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-105" style="background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, transparent 35%, rgba(0,0,0,0.18) 100%), ${paperColor};">
+            <div class="relative w-[280px] sm:w-[320px] h-[86px] sm:h-[94px] rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-105" style="background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, transparent 35%, rgba(0,0,0,0.18) 100%), ${paperColor};">
               <div class="absolute left-0 inset-y-0 w-8 rounded-l-full bg-black/15 border-r border-black/10"></div>
               <div class="absolute right-0 inset-y-0 w-8 rounded-r-full bg-black/15 border-l border-black/10"></div>
               <div class="ribbon-layer h-full w-11 satin-ribbon-band z-20" style="${ribCSS}"></div>
@@ -2685,6 +2723,7 @@
         : '';
 
       return `
+        <div class="bouquet-scale-wrap flex items-center justify-center">
         <div class="relative w-[345px] h-[455px] flex items-center justify-center">
           <!-- LAYER 1: Back Outer Wrapping Paper Wings -->
           <div class="absolute inset-0 shadow-xl transition-all duration-300" style="${wrapCSS} ${backSheetClip} z-index: 2;"></div>
@@ -2748,6 +2787,7 @@
           `
               : ''
           }
+        </div>
         </div>
       `;
     }
@@ -3327,7 +3367,31 @@
         }
         sheet.appendChild(item);
       });
+      scaleMobileLetterSheets();
     }
+
+    function scaleMobileLetterSheets() {
+      const pairs = [
+        { scalerId: 'letter-canvas-scaler', sheetId: 'letter-canvas' },
+        { scalerId: 'recipient-sheet-scaler', sheetId: 'recipient-letter-sheet' }
+      ];
+      pairs.forEach(({ scalerId, sheetId }) => {
+        const scaler = document.getElementById(scalerId);
+        const sheet = document.getElementById(sheetId);
+        if (!scaler || !sheet) return;
+        if (window.innerWidth <= 680) {
+          const avail = Math.max(280, window.innerWidth - 32);
+          const ratio = Math.min(1, avail / 640);
+          sheet.style.transform = `scale(${ratio.toFixed(4)})`;
+          scaler.style.height = `${Math.round(sheet.offsetHeight * ratio)}px`;
+        } else {
+          sheet.style.transform = '';
+          scaler.style.height = '';
+        }
+      });
+    }
+
+    window.addEventListener('resize', scaleMobileLetterSheets);
 
     function escapeHTML(str) {
       return str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
