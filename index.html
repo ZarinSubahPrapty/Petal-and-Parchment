@@ -413,6 +413,7 @@
       width: 100%;
       display: flex;
       justify-content: center;
+      overflow: hidden;
     }
     @media (max-width: 680px) {
       .mobile-sheet-scaler .paper-sheet {
@@ -420,16 +421,56 @@
         min-width: 640px !important;
         max-width: 640px !important;
         transform-origin: top center;
+        flex-shrink: 0;
       }
       .bouquet-scale-wrap {
         transform: scale(0.84);
         transform-origin: center center;
       }
+      #bouquet-stage {
+        height: 400px !important;
+      }
+      #share-bouquet-render,
+      #recipient-bouquet-display {
+        height: 395px !important;
+      }
+      #recipient-letter-col {
+        min-height: 340px !important;
+      }
+      #recipient-envelope-stage {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+      }
+      #folded-preview-stage {
+        min-height: 220px;
+      }
+      .resize-handle {
+        opacity: 0.92;
+      }
+      .rh-nw, .rh-ne, .rh-sw, .rh-se {
+        width: 18px !important;
+        height: 18px !important;
+      }
+      .rh-n, .rh-s {
+        width: 34px !important;
+        height: 13px !important;
+      }
+      .rh-w, .rh-e {
+        width: 13px !important;
+        height: 34px !important;
+      }
     }
-    @media (max-width: 390px) {
+    @media (max-width: 400px) {
       .bouquet-scale-wrap {
         transform: scale(0.75);
         transform-origin: center center;
+      }
+      #bouquet-stage {
+        height: 365px !important;
+      }
+      #share-bouquet-render,
+      #recipient-bouquet-display {
+        height: 360px !important;
       }
     }
   </style>
@@ -2241,6 +2282,14 @@
       footer.className = 'absolute bottom-3 right-5 text-[11px] font-serif italic opacity-50 pointer-events-none';
       footer.textContent = `— ${idx + 1} —`;
       canvas.appendChild(footer);
+      scaleMobileLetterSheets();
+    }
+
+    function getMobileCanvasScaleRatio(sheetEl) {
+      if (window.innerWidth > 680 || !sheetEl) return 1;
+      const parentW = sheetEl.parentElement ? sheetEl.parentElement.clientWidth : 0;
+      const avail = parentW > 60 ? parentW - 4 : Math.max(270, window.innerWidth - 36);
+      return Math.min(1, avail / 640);
     }
 
     function attach4SideResizeAndDrag(boxEl, dragHandleEl, modelObj, onUpdate, onMovedCallback, onTapCallback) {
@@ -2260,11 +2309,13 @@
           const startH = modelObj.height;
           const startLeft = modelObj.x;
           const startTop = modelObj.y;
+          const scaleRatio = getMobileCanvasScaleRatio(boxEl.closest('.paper-sheet'));
 
           const moveResize = ev => {
+            if (ev.cancelable) ev.preventDefault();
             const p = ev.touches ? ev.touches[0] : ev;
-            const dx = p.clientX - startX;
-            const dy = p.clientY - startY;
+            const dx = (p.clientX - startX) / scaleRatio;
+            const dy = (p.clientY - startY) / scaleRatio;
 
             if (dir.includes('e')) modelObj.width = Math.max(60, Math.min(600, startW + dx));
             if (dir.includes('s')) modelObj.height = Math.max(48, Math.min(560, startH + dy));
@@ -2309,7 +2360,7 @@
         h.addEventListener('touchstart', startResize, { passive: false });
       });
 
-      let sx = 0, sy = 0, ox = 0, oy = 0, dragging = false;
+      let sx = 0, sy = 0, ox = 0, oy = 0, dragging = false, scaleRatio = 1;
       const onDown = e => {
         if (e.target.classList.contains('resize-handle')) return;
         if (e.target.isContentEditable && dragHandleEl !== boxEl) return;
@@ -2318,6 +2369,7 @@
         sy = pt.clientY;
         ox = modelObj.x;
         oy = modelObj.y;
+        scaleRatio = getMobileCanvasScaleRatio(boxEl.closest('.paper-sheet'));
         dragging = true;
         if (onUpdate) onUpdate();
       };
@@ -2325,9 +2377,10 @@
       const onMove = e => {
         if (!dragging) return;
         const pt = e.touches ? e.touches[0] : e;
-        const dx = pt.clientX - sx;
-        const dy = pt.clientY - sy;
+        const dx = (pt.clientX - sx) / scaleRatio;
+        const dy = (pt.clientY - sy) / scaleRatio;
         if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+          if (e.cancelable) e.preventDefault();
           if (onMovedCallback) onMovedCallback();
           modelObj.x = Math.max(-10, Math.min(560, ox + dx));
           modelObj.y = Math.max(-10, Math.min(560, oy + dy));
@@ -2347,7 +2400,7 @@
       dragHandleEl.addEventListener('mousedown', onDown);
       dragHandleEl.addEventListener('touchstart', onDown, { passive: true });
       window.addEventListener('mousemove', onMove);
-      window.addEventListener('touchmove', onMove, { passive: true });
+      window.addEventListener('touchmove', onMove, { passive: false });
       window.addEventListener('mouseup', onUp);
       window.addEventListener('touchend', onUp);
     }
@@ -2910,59 +2963,92 @@
     /* ============================================================================
        10. SELF-CONTAINED UTF-8 SAFE BASE64 LINK ENCODER + OFFLINE HTML EXPORT
        ============================================================================ */
+    const LINK_FONTS = [
+      "'Dancing Script', cursive",
+      "'Playfair Display', serif",
+      "'Caveat', cursive",
+      "'Great Vibes', cursive",
+      "'Cormorant Garamond', serif",
+      "'Indie Flower', cursive",
+      "'Shadows Into Light', cursive",
+      "'Courier Prime', monospace",
+      "'Montserrat', sans-serif",
+      "'Lora', serif"
+    ];
+    const LINK_TEXTURES = ['none', 'coffee', 'burnt', 'crinkled', 'lined', 'dots', 'gold', 'botanical'];
+    const LINK_RIB_PRINTS = ['solid', 'balls', 'hearts', 'stars', 'stitch', 'goldtrim'];
+    const LINK_WRAP_STYLES = ['korean', 'cone', 'kraft', 'pleated'];
+    const LINK_WRAP_PATS = ['solid', 'balls', 'stripes', 'leaves', 'hearts', 'kraft', 'linen', 'gold', 'stars', 'gingham', 'terrazzo', 'newsprint'];
+    const LINK_ENV_PATS = ENVELOPE_PATTERNS.map(p => p.id);
+    const LINK_FLOWERS = FLOWERS_32.map(f => f.id);
+
     function compactPayloadForLink(state) {
       const c = {
-        m: state.creationMode,
+        m: state.creationMode === 'letter-only' ? 1 : state.creationMode === 'bouquet-only' ? 2 : 0,
         l: state.hasLetter ? 1 : 0,
         b: state.hasBouquet ? 1 : 0
       };
       if (state.passcode) c.p = state.passcode;
       if (state.hasLetter && state.letter) {
-        c.lt = {
-          f: state.letter.foldType,
-          es: state.letter.envelopeStyle,
-          rc: state.letter.ribbonColor,
-          rp: state.letter.ribbonPrint,
-          pg: state.letter.pages.map(p => ({
-            bg: p.bgColor,
-            tx: p.texture,
-            tb: p.textBlocks.map(t => ({
-              t: t.text,
-              x: Math.round(t.x),
-              y: Math.round(t.y),
-              w: Math.round(t.width || 420),
-              h: Math.round(t.height || 140),
-              ff: t.fontFamily,
-              fs: t.fontSize,
-              c: t.color,
-              a: t.textAlign
-            })),
-            el: p.elements
-              .filter(el => el.kind !== 'video')
-              .map(el => ({
-                k: el.kind,
-                em: el.emoji,
-                bd: el.badge,
-                s: el.src,
-                x: Math.round(el.x),
-                y: Math.round(el.y),
-                w: Math.round(el.width || 80),
-                h: Math.round(el.height || 80),
-                r: el.rotate || 0
-              }))
-          }))
-        };
+        const es = state.letter.envelopeStyle || {};
+        const esIdx = es.type === 'pattern' ? LINK_ENV_PATS.indexOf(es.value) : -1;
+        const rcIdx = LINK_RIB_PRINTS.indexOf(state.letter.ribbonPrint);
+        c.lt = [
+          state.letter.foldType === 'round' ? 1 : 0,
+          esIdx >= 0 ? esIdx : (es.color || '#FFE4E8'),
+          state.letter.ribbonColor || '#E11D48',
+          rcIdx >= 0 ? rcIdx : 0,
+          state.letter.pages.map(p => {
+            const txIdx = LINK_TEXTURES.indexOf(p.texture);
+            return [
+              p.bgColor,
+              txIdx >= 0 ? txIdx : 0,
+              p.textBlocks.map(t => {
+                const ffIdx = LINK_FONTS.indexOf(t.fontFamily);
+                return [
+                  t.text,
+                  Math.round(t.x),
+                  Math.round(t.y),
+                  Math.round(t.width || 420),
+                  Math.round(t.height || 140),
+                  ffIdx >= 0 ? ffIdx : t.fontFamily,
+                  parseInt(t.fontSize, 10) || 26,
+                  t.color,
+                  t.textAlign === 'center' ? 1 : t.textAlign === 'right' ? 2 : 0
+                ];
+              }),
+              p.elements
+                .filter(el => el.kind !== 'video')
+                .map(el => [
+                  el.kind === 'sticker' ? 0 : 1,
+                  el.kind === 'sticker' ? el.emoji : el.src,
+                  el.badge || '',
+                  Math.round(el.x),
+                  Math.round(el.y),
+                  Math.round(el.width || 80),
+                  Math.round(el.height || 80),
+                  el.rotate || 0
+                ])
+            ];
+          })
+        ];
       }
       if (state.hasBouquet && state.bouquet) {
-        c.bq = {
-          ws: state.bouquet.wrapStyle,
-          wc: state.bouquet.wrapColor,
-          wp: state.bouquet.wrapPattern,
-          rc: state.bouquet.ribbonColor,
-          rp: state.bouquet.ribbonPrint,
-          nt: state.bouquet.noteText,
-          st: state.bouquet.stems.map(s => s.flowerId)
-        };
+        const wsIdx = LINK_WRAP_STYLES.indexOf(state.bouquet.wrapStyle);
+        const wpIdx = LINK_WRAP_PATS.indexOf(state.bouquet.wrapPattern);
+        const rpIdx = LINK_RIB_PRINTS.indexOf(state.bouquet.ribbonPrint);
+        c.bq = [
+          wsIdx >= 0 ? wsIdx : 0,
+          state.bouquet.wrapColor || '#F7E9D7',
+          wpIdx >= 0 ? wpIdx : 0,
+          state.bouquet.ribbonColor || '#E11D48',
+          rpIdx >= 0 ? rpIdx : 0,
+          state.bouquet.noteText || '',
+          state.bouquet.stems.map(s => {
+            const fi = LINK_FLOWERS.indexOf(s.flowerId);
+            return fi >= 0 ? fi : s.flowerId;
+          })
+        ];
       }
       return c;
     }
@@ -2971,11 +3057,48 @@
       if (!obj || typeof obj !== 'object') return null;
       if (obj.letter || obj.bouquet) return obj;
       const expanded = JSON.parse(JSON.stringify(defaultState));
-      expanded.creationMode = obj.m || 'both';
+      expanded.creationMode = obj.m === 1 ? 'letter-only' : obj.m === 2 ? 'bouquet-only' : (typeof obj.m === 'string' ? obj.m : 'both');
       expanded.hasLetter = !!obj.l;
       expanded.hasBouquet = !!obj.b;
       expanded.passcode = obj.p || '';
-      if (obj.lt) {
+      if (Array.isArray(obj.lt)) {
+        const [f, esVal, rc, rp, pgs] = obj.lt;
+        expanded.letter.foldType = f === 1 ? 'round' : 'square';
+        expanded.letter.envelopeStyle = typeof esVal === 'number'
+          ? { type: 'pattern', value: LINK_ENV_PATS[esVal] || 'florals', color: '#FFE4E8' }
+          : { type: 'solid', value: esVal || '#FFE4E8', color: esVal || '#FFE4E8' };
+        expanded.letter.ribbonColor = rc || '#E11D48';
+        expanded.letter.ribbonPrint = typeof rp === 'number' ? (LINK_RIB_PRINTS[rp] || 'balls') : (rp || 'balls');
+        expanded.letter.pages = (pgs || []).map((p, idx) => ({
+          id: 'page-' + idx,
+          bgColor: p[0] || '#FFFDF9',
+          texture: typeof p[1] === 'number' ? (LINK_TEXTURES[p[1]] || 'none') : (p[1] || 'none'),
+          textBlocks: (p[2] || []).map((t, ti) => ({
+            id: 'tb-' + ti,
+            text: t[0] || '',
+            x: t[1] ?? 42,
+            y: t[2] ?? 44,
+            width: t[3] ?? 420,
+            height: t[4] ?? 140,
+            fontFamily: typeof t[5] === 'number' ? (LINK_FONTS[t[5]] || LINK_FONTS[0]) : (t[5] || LINK_FONTS[0]),
+            fontSize: typeof t[6] === 'number' ? `${t[6]}px` : (t[6] || '26px'),
+            color: t[7] || '#291D1E',
+            textAlign: t[8] === 1 ? 'center' : t[8] === 2 ? 'right' : (t[8] || 'left')
+          })),
+          elements: (p[3] || []).map((el, ei) => ({
+            id: 'el-' + ei,
+            kind: el[0] === 0 ? 'sticker' : 'image',
+            emoji: el[0] === 0 ? el[1] : undefined,
+            src: el[0] === 1 ? el[1] : undefined,
+            badge: el[2] || '',
+            x: el[3] ?? 120,
+            y: el[4] ?? 140,
+            width: el[5] ?? 80,
+            height: el[6] ?? 80,
+            rotate: el[7] || 0
+          }))
+        }));
+      } else if (obj.lt) {
         expanded.letter.foldType = obj.lt.f || 'square';
         expanded.letter.envelopeStyle = obj.lt.es || expanded.letter.envelopeStyle;
         expanded.letter.ribbonColor = obj.lt.rc || '#E11D48';
@@ -3010,7 +3133,19 @@
           }))
         }));
       }
-      if (obj.bq) {
+      if (Array.isArray(obj.bq)) {
+        const [ws, wc, wp, rc, rp, nt, sts] = obj.bq;
+        expanded.bouquet.wrapStyle = typeof ws === 'number' ? (LINK_WRAP_STYLES[ws] || 'korean') : (ws || 'korean');
+        expanded.bouquet.wrapColor = wc || '#F7E9D7';
+        expanded.bouquet.wrapPattern = typeof wp === 'number' ? (LINK_WRAP_PATS[wp] || 'balls') : (wp || 'balls');
+        expanded.bouquet.ribbonColor = rc || '#E11D48';
+        expanded.bouquet.ribbonPrint = typeof rp === 'number' ? (LINK_RIB_PRINTS[rp] || 'balls') : (rp || 'balls');
+        expanded.bouquet.noteText = nt || '';
+        expanded.bouquet.stems = (sts || []).map((fid, si) => ({
+          id: 'stem-' + si,
+          flowerId: typeof fid === 'number' ? (LINK_FLOWERS[fid] || FLOWERS_32[0].id) : fid
+        }));
+      } else if (obj.bq) {
         expanded.bouquet.wrapStyle = obj.bq.ws || 'korean';
         expanded.bouquet.wrapColor = obj.bq.wc || '#F7E9D7';
         expanded.bouquet.wrapPattern = obj.bq.wp || 'balls';
@@ -3122,14 +3257,26 @@
       await regenerateShareLink();
     }
 
+    function recompressDataUrl(dataUrl, maxDim, quality) {
+      return new Promise(resolve => {
+        if (!dataUrl || !dataUrl.startsWith('data:image')) return resolve(dataUrl);
+        compressImageDataUrl(dataUrl, maxDim, quality, res => resolve(res));
+      });
+    }
+
     async function regenerateShareLink() {
       const urlInput = document.getElementById('generated-share-url');
       urlInput.value = 'Generating private link...';
       appState.passcode = document.getElementById('gift-passcode-input').value.trim();
       const cleanPayload = JSON.parse(JSON.stringify(appState));
-      cleanPayload.letter.pages.forEach(p => {
+      for (const p of cleanPayload.letter.pages) {
         p.elements = p.elements.filter(el => el.kind !== 'video');
-      });
+        for (const el of p.elements) {
+          if (el.kind === 'image' && el.src) {
+            el.src = await recompressDataUrl(el.src, 220, 0.52);
+          }
+        }
+      }
 
       let token = await encodeGiftPayload(cleanPayload);
       const baseUrl = window.location.href.split('#')[0].split('?')[0];
@@ -3275,6 +3422,7 @@
         reader.classList.add('animate-unfold-sheet');
         recipientPageIndex = 0;
         renderRecipientLetterPage();
+        requestAnimationFrame(scaleMobileLetterSheets);
       }, 1400);
     }
 
@@ -3380,10 +3528,10 @@
         const sheet = document.getElementById(sheetId);
         if (!scaler || !sheet) return;
         if (window.innerWidth <= 680) {
-          const avail = Math.max(280, window.innerWidth - 32);
-          const ratio = Math.min(1, avail / 640);
+          const ratio = getMobileCanvasScaleRatio(sheet);
           sheet.style.transform = `scale(${ratio.toFixed(4)})`;
-          scaler.style.height = `${Math.round(sheet.offsetHeight * ratio)}px`;
+          const baseH = sheet.offsetHeight || 560;
+          scaler.style.height = `${Math.round(baseH * ratio)}px`;
         } else {
           sheet.style.transform = '';
           scaler.style.height = '';
